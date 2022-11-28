@@ -261,4 +261,4 @@ HAVING COUNT(productid)>1
 
 ![15](https://user-images.githubusercontent.com/96656340/204262836-67948736-7f57-44e2-8fa0-5309aeaf4999.PNG)
 
-Beni (LinkeIn)[https://tr.linkedin.com/in/beratkubilayartvin-1bka] 'den takip edebilirsiniz.
+Beni (LinkedIn)[https://tr.linkedin.com/in/beratkubilayartvin-1bka] 'den takip edebilirsiniz.
