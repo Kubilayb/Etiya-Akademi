@@ -1,0 +1,30 @@
+--hangi bedenden kaç tane var küçükten büyüğe sıralayınız
+select s.name,count(cl.sizeid) from colorsizerelations cl
+right join size s
+on cl.sizeid=s.id
+group by s.name
+order by count(cl.sizeid) asc
+
+--unitprice'ı 20 ile 90 arasındaki ürünleri bize göster
+select name,unitprice from products
+where unitprice between '20' and '90'
+
+--İllere göre alınan sipariş sayısını göster
+select c.name,count(a.cityid) from address a
+right join city c 
+on a.cityid=c.id
+inner join orders o
+on o.addressid=a.id
+group by c.name 
+
+--hepsijet firmasını ekle
+insert into cargo (name) values('hepsijet')
+
+
+--2'den fazla product a sahip olan kategorileri göster
+
+select c.id, count(productid)from categories c
+left join productcategories pc
+on c.id=pc.categoryid
+group by c.id
+having count(productid) >1
