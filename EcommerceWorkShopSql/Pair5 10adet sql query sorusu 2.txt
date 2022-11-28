@@ -1,0 +1,64 @@
+--verilen sipariş başlıklarını en az dan en çoka sırala
+
+select at.name as "Sipariş Başlıkları",count(*) from orders o
+right join address a
+on o.addressid=a.id
+right join addresstitle at
+on at.id=a.addresstitleid
+group by at.name
+order by count(*) asc
+
+--hangi kargo şirketinin ne kadar teslimat yaptığını büyükten küçüğe sırala
+
+select c.name as "Kargo Şirketleri",count(o.cargoid) from orders o
+right join cargo c
+on c.id=o.cargoid
+group by c.name
+order by count(o.cargoid) desc
+--stock sayısı 10 ile 50 arasındaki product'ları bize getir(between)
+
+select * from products
+where stock between 10 and 50
+
+-- coat jean ve tshirt in bize getir(in kullanımı)
+
+select name as "Ürün Adı",stock as "Stoğu" from products 
+where name in('coat','jean','tshirt')
+
+--product'ı olan veya olmayan bütün kategorileri bize göster
+
+select * from categories c
+left join productcategories pc
+on c.id=pc.categoryid
+
+--product'ı olmayan kategorileri bize göster
+
+select c.id, count(productid)from categories c
+left join productcategories pc
+on c.id=pc.categoryid
+group by c.id
+having count(productid) <1
+
+--hangi kategoriden kaç tane product var bize göster
+
+select c.id, count(productid)from categories c
+left join productcategories pc
+on c.id=pc.categoryid
+group by c.id
+
+--insert Product tablosuna bir ürün daha ekle
+--(shoes unitprice ı 230 olan 150 afet stock olan ve rengi mavi 3 olan ekle)
+insert into products(name,unitprice,stock,colorsizeid)
+values('shoes',230,150,3)
+
+--delete colors tablosundan siyah rengi kaldır
+delete from colors
+where id=6
+
+--update products tablosundaki tişörtün fiyatını 50 den 60 a güncelle stoklarınıda 80 e güncelle
+
+update products 
+set stock=80, unitprice=60
+where id=4
+
+
