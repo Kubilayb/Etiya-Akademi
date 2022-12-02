@@ -24,6 +24,9 @@ public class Cargo {
     @Column(name = "id")
     private int id;
 
+    @Column(name = "price")
+    private int price;
+
     @Column(name = "name")
     private String name;
 
