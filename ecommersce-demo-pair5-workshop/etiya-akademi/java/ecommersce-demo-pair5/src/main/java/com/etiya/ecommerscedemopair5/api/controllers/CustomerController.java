@@ -1,10 +1,12 @@
 package com.etiya.ecommerscedemopair5.api.controllers;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.CustomerService;
-import com.etiya.ecommerscedemopair5.business.abstracts.ProductService;
+import com.etiya.ecommerscedemopair5.business.dtos.request.customer.AddCustomerRequest;
+import com.etiya.ecommerscedemopair5.business.dtos.response.customer.AddCustomerResponse;
 import com.etiya.ecommerscedemopair5.entities.concretes.Customer;
-import com.etiya.ecommerscedemopair5.entities.concretes.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,5 +51,10 @@ public class CustomerController {
     @GetMapping("/getCustomerInfo")
     public List<Customer> getAllNameAsc(@RequestParam("id giriniz") int id){
         return customerService.getAllNameAsc(id);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<AddCustomerResponse> addCustomer(@RequestBody AddCustomerRequest addCustomerRequest){
+        return new ResponseEntity<AddCustomerResponse>(customerService.addCustomer(addCustomerRequest),HttpStatus.CREATED);
     }
 }

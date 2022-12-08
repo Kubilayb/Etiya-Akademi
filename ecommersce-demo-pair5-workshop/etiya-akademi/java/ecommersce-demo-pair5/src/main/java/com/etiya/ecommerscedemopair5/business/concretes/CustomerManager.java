@@ -1,8 +1,9 @@
 package com.etiya.ecommerscedemopair5.business.concretes;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.CustomerService;
+import com.etiya.ecommerscedemopair5.business.dtos.request.customer.AddCustomerRequest;
+import com.etiya.ecommerscedemopair5.business.dtos.response.customer.AddCustomerResponse;
 import com.etiya.ecommerscedemopair5.entities.concretes.Customer;
-import com.etiya.ecommerscedemopair5.entities.concretes.Product;
 import com.etiya.ecommerscedemopair5.repository.abstracts.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,22 @@ public class CustomerManager implements CustomerService {
     @Override
     public List<Customer> getAllNameAsc(int id) {
         return customerRepository.findAllCustomerById(id);
+    }
+
+    @Override
+    public AddCustomerResponse addCustomer(AddCustomerRequest addCustomerRequest) {
+        Customer customer = new Customer();
+
+        customer.setFirstname(addCustomerRequest.getFirstname());
+        customer.setLastname(addCustomerRequest.getLastname());
+        customer.setPhonenumber(addCustomerRequest.getPhonenumber());
+        customer.setBirthday(addCustomerRequest.getBirthday());
+
+        Customer savedCustomer = customerRepository.save(customer);
+
+        AddCustomerResponse response = new AddCustomerResponse(savedCustomer.getId(),savedCustomer.getFirstname(),
+                savedCustomer.getLastname(),savedCustomer.getPhonenumber(),savedCustomer.getBirthday());
+        return response;
     }
 
 

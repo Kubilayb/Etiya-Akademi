@@ -17,20 +17,17 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 
-
 public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
-
-    @OneToMany(mappedBy = "payment")
-    @JsonIgnore
-    private List<Order> orders;
-
     @ManyToOne
     @JoinColumn(name = "moneytypeid")
     private MoneyType moneyType;
 
+    @OneToMany(mappedBy = "payment")
+    @JsonIgnore
+    private List<Order> orders;
 }

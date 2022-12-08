@@ -1,7 +1,8 @@
 package com.etiya.ecommerscedemopair5.business.abstracts;
 
+import com.etiya.ecommerscedemopair5.business.dtos.request.customer.AddCustomerRequest;
+import com.etiya.ecommerscedemopair5.business.dtos.response.customer.AddCustomerResponse;
 import com.etiya.ecommerscedemopair5.entities.concretes.Customer;
-import com.etiya.ecommerscedemopair5.entities.concretes.Product;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface CustomerService {
     Customer getByLastName(String name);
 
     List<Customer> getAllNameAsc(int id);
+
+    AddCustomerResponse addCustomer(AddCustomerRequest addCustomerRequest);
 }

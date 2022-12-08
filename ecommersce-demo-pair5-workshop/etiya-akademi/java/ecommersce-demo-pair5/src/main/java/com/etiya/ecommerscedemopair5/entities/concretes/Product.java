@@ -1,6 +1,5 @@
 package com.etiya.ecommerscedemopair5.entities.concretes;
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,7 +31,7 @@ public class Product {
     @Column(name = "stock")
     private double stock;
 
-    @ManyToOne  //Eğer tabloda many gittiyse manytoOne yazılır
+    @ManyToOne  //Eğer tabloda many gittiyse ManytoOne yazılır
     @JoinColumn(name = "colorsizeid")
     @JsonIgnore
     private ColorSizeRelation colorSizeRelation;

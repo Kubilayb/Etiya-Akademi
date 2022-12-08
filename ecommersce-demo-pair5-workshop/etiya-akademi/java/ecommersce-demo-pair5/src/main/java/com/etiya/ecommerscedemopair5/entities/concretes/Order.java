@@ -1,11 +1,14 @@
 package com.etiya.ecommerscedemopair5.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -21,7 +24,7 @@ public class Order {
     private int id;
 
     @Column(name = "date")
-    private java.sql.Date date;
+    private Date orderDate;
 
     @ManyToOne
     @JoinColumn(name = "customerid")
@@ -42,8 +45,6 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "productid")
     private Product product;
-
-
 
 
 }

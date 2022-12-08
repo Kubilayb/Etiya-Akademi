@@ -1,0 +1,81 @@
+package com.etiya.ecommerscedemopair5.business.concretes;
+
+import com.etiya.ecommerscedemopair5.business.abstracts.AddressService;
+import com.etiya.ecommerscedemopair5.business.abstracts.AddressTitleService;
+import com.etiya.ecommerscedemopair5.business.abstracts.CityService;
+import com.etiya.ecommerscedemopair5.business.abstracts.CustomerService;
+import com.etiya.ecommerscedemopair5.business.dtos.request.address.AddAddressRequest;
+import com.etiya.ecommerscedemopair5.business.dtos.response.address.AddAddressResponse;
+import com.etiya.ecommerscedemopair5.entities.concretes.Address;
+import com.etiya.ecommerscedemopair5.entities.concretes.AddressTitle;
+import com.etiya.ecommerscedemopair5.entities.concretes.City;
+import com.etiya.ecommerscedemopair5.entities.concretes.Customer;
+import com.etiya.ecommerscedemopair5.repository.abstracts.AddressRepository;
+import com.etiya.ecommerscedemopair5.repository.abstracts.CityRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@AllArgsConstructor
+public class AddressManager implements AddressService {
+
+    private AddressRepository addressRepository;
+    private AddressTitleService addressTitleService;
+    private CityService cityService;
+    private CustomerService customerService;
+    private CityRepository cityRepository;
+    @Override
+    public List<Address> getAll() {
+        return addressRepository.findAll();
+    }
+    @Override
+    public Address getById(int id) {
+        return addressRepository.findById(id).orElseThrow();
+    }
+    @Override
+    public List<Address> getByName(String street) {
+        return addressRepository.findByName(street);
+    }
+    @Override
+    public AddAddressResponse addAddress(AddAddressRequest addAddressRequest) {
+
+        Address address = new Address();
+
+        address.setStreet(addAddressRequest.getStreet());
+
+        AddressTitle addressTitle = addressTitleService.getById(addAddressRequest.getAddresstitleId());
+        address.setAddresstitle(addressTitle);
+
+        //value ve business
+
+        checkIfExistsCityId(addAddressRequest.getCityId());
+
+        City city = cityService.getById(addAddressRequest.getCityId());
+        address.setCity(city);
+
+        Customer customer = customerService.getById(addAddressRequest.getCustomerId());
+        address.setCustomers(customer);
+
+
+        Address savedAddress=addressRepository.save(address);
+
+        AddAddressResponse response =
+                new AddAddressResponse(savedAddress.getId(),
+                        savedAddress.getCity().getId(),
+                        savedAddress.getAddresstitle().getId(),
+                        savedAddress.getStreet(),
+                        savedAddress.getCustomers().getId());
+
+        return response;
+    }
+
+    public void checkIfExistsCityId(int id){
+        boolean isExists = cityRepository.existsById(id);
+        if (!isExists){
+            throw new RuntimeException("This city not found");
+        }
+    }
+
+}

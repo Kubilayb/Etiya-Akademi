@@ -1,7 +1,8 @@
 package com.etiya.ecommerscedemopair5.business.concretes;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.SizeService;
-import com.etiya.ecommerscedemopair5.entities.concretes.Product;
+import com.etiya.ecommerscedemopair5.business.dtos.request.size.AddSizeRequest;
+import com.etiya.ecommerscedemopair5.business.dtos.response.size.AddSizeResponse;
 import com.etiya.ecommerscedemopair5.entities.concretes.Size;
 import com.etiya.ecommerscedemopair5.repository.abstracts.SizeRepository;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class SizeManager implements SizeService {
 
-    private SizeRepository sizeRepository;
+
     @Override
     public List<Size> getAll() {
         return sizeRepository.findAll();
@@ -34,5 +35,17 @@ public class SizeManager implements SizeService {
         return sizeRepository.findByName(name);
     }
 
+    private SizeRepository sizeRepository;
+    @Override
+    public AddSizeResponse addSize(AddSizeRequest addSizeRequest) {
+        Size size = new Size();
+        size.setName(addSizeRequest.getName());
+        size.setStock(addSizeRequest.getStock());
 
+        Size savedSize = sizeRepository.save(size);
+
+        AddSizeResponse response = new AddSizeResponse(savedSize.getId(), savedSize.getName(), savedSize.getStock());
+        return response;
+
+    }
 }

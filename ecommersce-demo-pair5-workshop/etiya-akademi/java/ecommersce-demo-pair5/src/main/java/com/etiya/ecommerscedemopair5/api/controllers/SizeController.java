@@ -1,11 +1,12 @@
 package com.etiya.ecommerscedemopair5.api.controllers;
 
-
-import com.etiya.ecommerscedemopair5.business.abstracts.ProductService;
 import com.etiya.ecommerscedemopair5.business.abstracts.SizeService;
-import com.etiya.ecommerscedemopair5.entities.concretes.Product;
+import com.etiya.ecommerscedemopair5.business.dtos.request.size.AddSizeRequest;
+import com.etiya.ecommerscedemopair5.business.dtos.response.size.AddSizeResponse;
 import com.etiya.ecommerscedemopair5.entities.concretes.Size;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,7 +42,11 @@ public class SizeController {
     }
 
     @GetMapping("/getByName")
-    public Size getByName(@RequestParam("name") String name){
-        return sizeService.getByName(name);
+    public Size getByName(@RequestParam("name") String name) {return sizeService.getByName(name);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<AddSizeResponse> addSize(@RequestBody AddSizeRequest addSizeRequest){
+        return new ResponseEntity<AddSizeResponse>(sizeService.addSize(addSizeRequest), HttpStatus.CREATED);
     }
 }

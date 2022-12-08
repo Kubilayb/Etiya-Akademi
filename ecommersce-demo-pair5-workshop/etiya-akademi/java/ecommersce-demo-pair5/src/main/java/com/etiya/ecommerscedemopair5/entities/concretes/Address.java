@@ -23,6 +23,9 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @Column(name = "street")
+    private String street;
+
     @ManyToOne
     @JoinColumn(name = "addresstitleid")
     private AddressTitle addresstitle;
@@ -31,9 +34,6 @@ public class Address {
     @JoinColumn(name = "cityid")
     private City city;
 
-    @Column(name = "street")
-    private String street;
-
     @ManyToOne
     @JoinColumn(name = "customerid")
     private Customer customers;
@@ -41,7 +41,6 @@ public class Address {
     @OneToMany(mappedBy = "address")
     @JsonIgnore
     private List<Order> orders;
-
 
 }
 

@@ -2,11 +2,15 @@ package com.etiya.ecommerscedemopair5.api.controllers;
 
 
 import com.etiya.ecommerscedemopair5.business.abstracts.ProductService;
+import com.etiya.ecommerscedemopair5.business.dtos.request.product.AddProductRequest;
+import com.etiya.ecommerscedemopair5.business.dtos.response.product.AddProductResponse;
 import com.etiya.ecommerscedemopair5.entities.concretes.Product;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -45,4 +49,12 @@ public class ProductsController {
     public Product getByName(@RequestParam("name") String name){
         return productService.getByName(name);
     }
+
+
+    @PostMapping("/add")
+    public ResponseEntity<AddProductResponse> addProduct(@RequestBody @Valid AddProductRequest addProductRequest){
+        return new ResponseEntity<AddProductResponse>(productService.addProduct(addProductRequest), HttpStatus.CREATED);
+    }
+
 }
+
