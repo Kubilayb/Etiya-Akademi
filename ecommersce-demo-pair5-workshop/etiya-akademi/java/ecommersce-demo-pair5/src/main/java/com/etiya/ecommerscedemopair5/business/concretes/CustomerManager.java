@@ -3,18 +3,23 @@ package com.etiya.ecommerscedemopair5.business.concretes;
 import com.etiya.ecommerscedemopair5.business.abstracts.CustomerService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.customer.AddCustomerRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.customer.AddCustomerResponse;
+import com.etiya.ecommerscedemopair5.business.dtos.response.payment.AddPaymentResponse;
+import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommerscedemopair5.entities.concretes.Customer;
+import com.etiya.ecommerscedemopair5.entities.concretes.Payment;
 import com.etiya.ecommerscedemopair5.repository.abstracts.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 @AllArgsConstructor
 public class CustomerManager implements CustomerService {
     private CustomerRepository customerRepository;
+
+    private ModelMapperService modelMapperService;
+
     @Override
     public List<Customer> getAll() {
         return customerRepository.findAll();
@@ -42,7 +47,16 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public AddCustomerResponse addCustomer(AddCustomerRequest addCustomerRequest) {
-        Customer customer = new Customer();
+
+        Customer customer =
+                modelMapperService.getMapper().map(addCustomerRequest,Customer.class);
+        AddCustomerResponse addCustomerResponse =
+                modelMapperService.getMapper().map(customerRepository.save(customer),AddCustomerResponse.class);
+        return addCustomerResponse;
+    }
+}
+
+/*Customer customer = new Customer();
 
         customer.setFirstname(addCustomerRequest.getFirstname());
         customer.setLastname(addCustomerRequest.getLastname());
@@ -53,8 +67,4 @@ public class CustomerManager implements CustomerService {
 
         AddCustomerResponse response = new AddCustomerResponse(savedCustomer.getId(),savedCustomer.getFirstname(),
                 savedCustomer.getLastname(),savedCustomer.getPhonenumber(),savedCustomer.getBirthday());
-        return response;
-    }
-
-
-}
+        return response;*/

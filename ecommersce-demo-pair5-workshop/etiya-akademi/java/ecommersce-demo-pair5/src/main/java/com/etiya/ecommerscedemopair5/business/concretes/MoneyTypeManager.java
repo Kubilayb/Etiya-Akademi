@@ -3,7 +3,10 @@ package com.etiya.ecommerscedemopair5.business.concretes;
 import com.etiya.ecommerscedemopair5.business.abstracts.MoneyTypeService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.moneytype.AddMoneyTypeRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.moneytype.AddMoneyTypeResponse;
+import com.etiya.ecommerscedemopair5.business.dtos.response.payment.AddPaymentResponse;
+import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommerscedemopair5.entities.concretes.MoneyType;
+import com.etiya.ecommerscedemopair5.entities.concretes.Payment;
 import com.etiya.ecommerscedemopair5.repository.abstracts.MoneyTypeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +19,9 @@ import java.util.List;
 public class MoneyTypeManager implements MoneyTypeService {
 
     private MoneyTypeRepository moneyTypeRepository;
+
+    private ModelMapperService modelMapperService;
+
     @Override
     public List<MoneyType> getAll() {
         return null;
@@ -33,7 +39,16 @@ public class MoneyTypeManager implements MoneyTypeService {
 
     @Override
     public AddMoneyTypeResponse addMoneyType(AddMoneyTypeRequest addMoneyTypeRequest) {
-        MoneyType moneyType = new MoneyType();
+
+        MoneyType moneyType =
+                modelMapperService.getMapper().map(addMoneyTypeRequest,MoneyType.class);
+        AddMoneyTypeResponse addMoneyTypeResponse =
+                modelMapperService.getMapper().map(moneyTypeRepository.save(moneyType),AddMoneyTypeResponse.class);
+        return addMoneyTypeResponse;
+    }
+}
+
+/*MoneyType moneyType = new MoneyType();
         moneyType.setName(addMoneyTypeRequest.getName());
 
 
@@ -45,8 +60,4 @@ public class MoneyTypeManager implements MoneyTypeService {
         // MAPPING -> Category => AddCategoryResponse
         AddMoneyTypeResponse response =
                 new AddMoneyTypeResponse(savedMoneyType.getId(),savedMoneyType.getName());
-        return response;
-    }
-}
-
-
+        return response;*/

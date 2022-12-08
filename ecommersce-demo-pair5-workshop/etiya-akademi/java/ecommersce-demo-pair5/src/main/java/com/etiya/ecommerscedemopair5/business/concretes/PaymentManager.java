@@ -5,8 +5,11 @@ import com.etiya.ecommerscedemopair5.business.abstracts.PaymentService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.payment.AddPaymentRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.city.AddCityResponse;
 import com.etiya.ecommerscedemopair5.business.dtos.response.payment.AddPaymentResponse;
+import com.etiya.ecommerscedemopair5.business.dtos.response.product.AddProductResponse;
+import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommerscedemopair5.entities.concretes.MoneyType;
 import com.etiya.ecommerscedemopair5.entities.concretes.Payment;
+import com.etiya.ecommerscedemopair5.entities.concretes.Product;
 import com.etiya.ecommerscedemopair5.repository.abstracts.PaymentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,11 +19,12 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class PaymentManager implements PaymentService {
-
-
     private PaymentRepository paymentRepository;
 
-    private MoneyTypeService moneyTypeService;
+    //private MoneyTypeService moneyTypeService;
+
+    private ModelMapperService modelMapperService;
+
     @Override
     public List<Payment> getAll() {
         return paymentRepository.findAll();
@@ -34,19 +38,24 @@ public class PaymentManager implements PaymentService {
     @Override
     public AddPaymentResponse addPayment(AddPaymentRequest addPaymentRequest) {
         // MAPPING => AUTO MAPPER
-        Payment payment = new Payment();
-        MoneyType moneyType = moneyTypeService.getById(addPaymentRequest.getMoneytypeid());
+
+        Payment payment =
+                modelMapperService.getMapper().map(addPaymentRequest,Payment.class);
+        AddPaymentResponse addPaymentResponse =
+                modelMapperService.getMapper().map(paymentRepository.save(payment),AddPaymentResponse.class);
+        return addPaymentResponse;
+    }
+}
+    /*Payment payment = new Payment();
+    MoneyType moneyType = moneyTypeService.getById(addPaymentRequest.getMoneytypeid());
         payment.setMoneyType(moneyType);
 
-        //
-        // Business Rules
-        // Validation
-        Payment savedPayment = paymentRepository.save(payment);
+                //
+                // Business Rules
+                // Validation
+                Payment savedPayment = paymentRepository.save(payment);
 
-        // MAPPING -> Category => AddCategoryResponse
-        AddPaymentResponse response =
+                // MAPPING -> Category => AddCategoryResponse
+                AddPaymentResponse response =
                 new AddPaymentResponse(savedPayment.getId(),savedPayment.getMoneyType().getId());
-        return response;
-    }
-
-}
+                return response;*/

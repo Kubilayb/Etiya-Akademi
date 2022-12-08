@@ -6,10 +6,9 @@ import com.etiya.ecommerscedemopair5.business.abstracts.CityService;
 import com.etiya.ecommerscedemopair5.business.abstracts.CustomerService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.address.AddAddressRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.address.AddAddressResponse;
-import com.etiya.ecommerscedemopair5.entities.concretes.Address;
-import com.etiya.ecommerscedemopair5.entities.concretes.AddressTitle;
-import com.etiya.ecommerscedemopair5.entities.concretes.City;
-import com.etiya.ecommerscedemopair5.entities.concretes.Customer;
+import com.etiya.ecommerscedemopair5.business.dtos.response.payment.AddPaymentResponse;
+import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommerscedemopair5.entities.concretes.*;
 import com.etiya.ecommerscedemopair5.repository.abstracts.AddressRepository;
 import com.etiya.ecommerscedemopair5.repository.abstracts.CityRepository;
 import lombok.AllArgsConstructor;
@@ -22,9 +21,12 @@ import java.util.List;
 public class AddressManager implements AddressService {
 
     private AddressRepository addressRepository;
-    private AddressTitleService addressTitleService;
+
+    private ModelMapperService modelMapperService;
+
+   /* private AddressTitleService addressTitleService;
     private CityService cityService;
-    private CustomerService customerService;
+    private CustomerService customerService;*/
     private CityRepository cityRepository;
     @Override
     public List<Address> getAll() {
@@ -41,7 +43,24 @@ public class AddressManager implements AddressService {
     @Override
     public AddAddressResponse addAddress(AddAddressRequest addAddressRequest) {
 
-        Address address = new Address();
+        Address address =
+                modelMapperService.getMapper().map(addressRepository,Address.class);
+        AddAddressResponse addAddressResponse =
+                modelMapperService.getMapper().map(addressRepository.save(address),
+                        AddAddressResponse.class);
+        return addAddressResponse;
+
+    }
+
+    public void checkIfExistsCityId(int id){
+        boolean isExists = cityRepository.existsById(id);
+        if (!isExists){
+            throw new RuntimeException("This city not found");
+        }
+    }
+
+}
+/*        Address address = new Address();
 
         address.setStreet(addAddressRequest.getStreet());
 
@@ -68,14 +87,4 @@ public class AddressManager implements AddressService {
                         savedAddress.getStreet(),
                         savedAddress.getCustomers().getId());
 
-        return response;
-    }
-
-    public void checkIfExistsCityId(int id){
-        boolean isExists = cityRepository.existsById(id);
-        if (!isExists){
-            throw new RuntimeException("This city not found");
-        }
-    }
-
-}
+        return response;*/

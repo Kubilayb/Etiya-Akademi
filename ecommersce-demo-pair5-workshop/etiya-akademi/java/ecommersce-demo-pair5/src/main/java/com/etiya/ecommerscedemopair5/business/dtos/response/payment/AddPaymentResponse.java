@@ -11,5 +11,5 @@ import lombok.Setter;
 @Setter
 public class AddPaymentResponse {
     private int id;
-    private int moneytypeid;
+    private int moneytypeId;
 }

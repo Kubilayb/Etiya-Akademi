@@ -3,7 +3,10 @@ package com.etiya.ecommerscedemopair5.business.concretes;
 import com.etiya.ecommerscedemopair5.business.abstracts.ColorService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.colors.AddColorsRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.calors.AddColorsResponse;
+import com.etiya.ecommerscedemopair5.business.dtos.response.size.AddSizeResponse;
+import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommerscedemopair5.entities.concretes.Color;
+import com.etiya.ecommerscedemopair5.entities.concretes.Size;
 import com.etiya.ecommerscedemopair5.repository.abstracts.ColorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +16,8 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ColorManager implements ColorService {
-
     private ColorRepository colorRepository;
+    private ModelMapperService modelMapperService;
 
     @Override
     public List<Color> getAll() {
@@ -32,7 +35,14 @@ public class ColorManager implements ColorService {
     @Override
     public AddColorsResponse addColor(AddColorsRequest addColorRequest) {
         // MAPPING => AUTO MAPPER
-        Color color = new Color();
+        Color color =
+                modelMapperService.getMapper().map(addColorRequest,Color.class);
+        AddColorsResponse addColorsResponse =
+                modelMapperService.getMapper().map(colorRepository.save(color),AddColorsResponse.class);
+        return addColorsResponse;
+    }
+}
+        /*Color color = new Color();
         color.setName(addColorRequest.getName());
 
         //
@@ -44,6 +54,4 @@ public class ColorManager implements ColorService {
         AddColorsResponse response =
                 new AddColorsResponse(savedColor.getId(), savedColor.getName());
         //
-        return response;
-    }
-}
+        return response;*/

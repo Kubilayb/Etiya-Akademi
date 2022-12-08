@@ -13,6 +13,6 @@ public class AddCustomerResponse {
     private int id;
     private String firstname;
     private String lastname;
-    private String phonenumber;
+    private String phoneNumber;
     private java.sql.Timestamp birthday;
 }

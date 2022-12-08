@@ -8,10 +8,8 @@ import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommerscedemopair5.entities.concretes.Product;
 import com.etiya.ecommerscedemopair5.repository.abstracts.ProductRepository;
 import lombok.AllArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Id;
 import java.util.List;
 
 @Service
@@ -50,9 +48,9 @@ public class ProductManager implements ProductService {
         AddProductResponse addProductResponse =
                 modelMapperService.getMapper().map(productRepository.save(product),AddProductResponse.class);
         return addProductResponse;
-
-
-       /* Product product = new Product();
+    }
+}
+        /* Product product = new Product();
 
         product.setName(addProductRequest.getName());
         product.setUnitprice(addProductRequest.getUnitprice());
@@ -70,8 +68,3 @@ public class ProductManager implements ProductService {
                         savedProduct.getStock(),savedProduct.getColorSizeRelation().getId());
         return response;
               */
-
-
-    }
-
-}

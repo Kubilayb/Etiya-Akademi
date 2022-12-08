@@ -13,8 +13,6 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
-
 public class ProductCategory {
 
     @Id

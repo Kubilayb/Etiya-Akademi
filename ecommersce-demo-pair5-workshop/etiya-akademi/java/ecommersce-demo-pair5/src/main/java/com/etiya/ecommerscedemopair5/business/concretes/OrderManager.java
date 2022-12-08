@@ -30,17 +30,14 @@ public class OrderManager implements OrderService {
     public List<Order> getAll() {
         return orderRepository.findAll();
     }
-
     @Override
     public Order getById(int id) {
         return orderRepository.findById(id).orElseThrow();
     }
-
     @Override
     public List<Order> getByOrderDate(Date orderDate) {
         return orderRepository.findByOrderDate(orderDate);
     }
-
     @Override
     public AddOrderResponse addOrder(AddOrderRequest addOrderRequest) {
 
@@ -48,10 +45,7 @@ public class OrderManager implements OrderService {
         AddOrderResponse addOrderResponse =
                 modelMapperService.getMapper().map(orderRepository.save(order),AddOrderResponse.class);
         return addOrderResponse;
-
     }
-
-
 }
     /*
     Order order = new Order();

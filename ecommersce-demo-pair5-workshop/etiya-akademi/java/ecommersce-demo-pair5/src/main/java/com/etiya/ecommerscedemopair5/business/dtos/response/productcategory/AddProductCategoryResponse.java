@@ -11,6 +11,6 @@ import lombok.Setter;
 @Setter
 public class AddProductCategoryResponse {
     private int id;
-    private int categoryid;
-    private int productid;
+    private int categoryId;
+    private int productId;
 }

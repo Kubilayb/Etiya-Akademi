@@ -10,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Setter
 public class AddProductCategoryRequest {
-    private int categoryid;
-    private int productid;
+    private int categoryId;
+    private int productId;
     //bunlar maplemek için productId diye yazacağız!!!!!
 
 }

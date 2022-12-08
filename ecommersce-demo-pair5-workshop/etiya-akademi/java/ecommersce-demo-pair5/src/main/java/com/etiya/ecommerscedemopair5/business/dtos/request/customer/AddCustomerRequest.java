@@ -12,6 +12,6 @@ import lombok.Setter;
 public class AddCustomerRequest {
    private String firstname;
    private String lastname;
-   private String phonenumber;
+   private String phoneNumber;
    private java.sql.Timestamp birthday;
 }

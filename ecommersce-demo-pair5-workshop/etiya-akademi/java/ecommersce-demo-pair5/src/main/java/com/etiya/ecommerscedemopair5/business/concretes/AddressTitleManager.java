@@ -3,6 +3,7 @@ package com.etiya.ecommerscedemopair5.business.concretes;
 import com.etiya.ecommerscedemopair5.business.abstracts.AddressTitleService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.addresstitle.AddAddressTittleRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.addresstitle.AddAddressTitleResponse;
+import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommerscedemopair5.entities.concretes.AddressTitle;
 import com.etiya.ecommerscedemopair5.repository.abstracts.AddressTitleRepository;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,9 @@ import java.util.List;
 @AllArgsConstructor
 public class AddressTitleManager implements AddressTitleService {
     private AddressTitleRepository addressTitleRepository;
+
+    private ModelMapperService modelMapperService;
+
     @Override
     public List<AddressTitle> getAll() {
         return addressTitleRepository.findAll();
@@ -33,7 +37,15 @@ public class AddressTitleManager implements AddressTitleService {
     @Override
     public AddAddressTitleResponse addAddressTitle(AddAddressTittleRequest addAddressTitleRequest) {
         // MAPPING => AUTO MAPPER
-        AddressTitle addressTitle = new AddressTitle();
+        AddressTitle addressTitle =
+                modelMapperService.getMapper().map(addAddressTitleRequest,AddressTitle.class);
+        AddAddressTitleResponse addAddressTitleResponse=
+                modelMapperService.getMapper().map(addressTitleRepository.save(addressTitle),AddAddressTitleResponse.class);
+        return addAddressTitleResponse;
+
+    }
+}
+/* AddressTitle addressTitle = new AddressTitle();
         addressTitle.setName(addAddressTitleRequest.getName());
 
         //
@@ -45,7 +57,4 @@ public class AddressTitleManager implements AddressTitleService {
         AddAddressTitleResponse response =
                 new AddAddressTitleResponse(savedAddressTitle.getId(), savedAddressTitle.getName());
         //
-        return response;
-    }
-
-}
+        return response;*/
