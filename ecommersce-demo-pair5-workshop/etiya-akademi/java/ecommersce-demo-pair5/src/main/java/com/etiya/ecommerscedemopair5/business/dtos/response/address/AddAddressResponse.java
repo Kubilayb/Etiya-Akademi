@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 public class AddAddressResponse {
     private int id;
-    private int addressTitleid;
-    private int cityid;
+    private int addressTitleId;
+    private int cityId;
     private String street;
     private int customerId;
 

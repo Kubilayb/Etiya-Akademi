@@ -28,7 +28,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "customerid")
-    private Customer customers;
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "addressid")

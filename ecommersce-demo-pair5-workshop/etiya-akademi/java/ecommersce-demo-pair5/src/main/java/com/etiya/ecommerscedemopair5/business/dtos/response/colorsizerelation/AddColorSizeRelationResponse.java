@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddColorSizeRelationResponse {
-    private int colorSizeId;
+    private int id;
     private int sizeId;
     private int colorId;
 }

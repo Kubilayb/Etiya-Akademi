@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 
-    List <Customer> findAllByCustomerId(int id);
+    List <Customer> findAllById(int id);
 
 
     @Query("Select c From Customer as c WHERE firstname=:name")

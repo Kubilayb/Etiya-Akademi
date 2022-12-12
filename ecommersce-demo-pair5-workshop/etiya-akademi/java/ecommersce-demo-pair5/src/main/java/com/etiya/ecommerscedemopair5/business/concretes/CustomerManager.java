@@ -42,7 +42,7 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public List<Customer> getAllNameAsc(int id) {
-        return customerRepository.findAllByCustomerId(id);
+        return customerRepository.findAllById(id);
     }
 
     @Override

@@ -20,7 +20,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int customerId;
+    private int id;
 
     @Column(name = "firstname")
     private String firstname;
@@ -29,16 +29,16 @@ public class Customer {
     private String lastname;
 
     @Column(name = "phonenumber")
-    private String phonenumber;
+    private String phoneNumber;
 
     @Column(name = "birthday",nullable = true)
     private java.sql.Timestamp birthday;
 
-    @OneToMany(mappedBy = "customers")
+    @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private List<Order> orders;
 
-    @OneToMany(mappedBy = "customers")
+    @OneToMany(mappedBy = "customer")
     @JsonIgnore
     private List<Address> address;
 }

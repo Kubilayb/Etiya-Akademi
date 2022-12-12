@@ -5,16 +5,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.sql.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddOrderResponse {
     private int id;
-    private java.sql.Date date;
-    private int customerid;
-    private int addressid;
-    private int paymentid;
-    private int cargoid;
-    private int productid;
+    private Date orderDate;
+    private int customerId;
+    private int addressId;
+    private int paymentId;
+    private int cargoId;
+    private int productId;
 }

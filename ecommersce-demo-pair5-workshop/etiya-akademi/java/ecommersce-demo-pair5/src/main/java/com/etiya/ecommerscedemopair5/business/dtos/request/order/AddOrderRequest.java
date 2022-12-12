@@ -18,5 +18,5 @@ public class AddOrderRequest {
     private int paymentId;
     private int cargoId;
     private int productId;
-    private int orderId;
+
 }
