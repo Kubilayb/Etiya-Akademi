@@ -4,17 +4,21 @@ import com.etiya.ecommerscedemopair5.business.abstracts.AddressService;
 import com.etiya.ecommerscedemopair5.business.abstracts.AddressTitleService;
 import com.etiya.ecommerscedemopair5.business.abstracts.CityService;
 import com.etiya.ecommerscedemopair5.business.abstracts.CustomerService;
+import com.etiya.ecommerscedemopair5.business.constants.Messages;
 import com.etiya.ecommerscedemopair5.business.dtos.AddressDTO;
 import com.etiya.ecommerscedemopair5.business.dtos.CategoryDTO;
 import com.etiya.ecommerscedemopair5.business.dtos.request.address.AddAddressRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.address.AddAddressResponse;
 import com.etiya.ecommerscedemopair5.business.dtos.response.payment.AddPaymentResponse;
+import com.etiya.ecommerscedemopair5.core.util.exceptions.BusinessException;
 import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
 import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.*;
 import com.etiya.ecommerscedemopair5.repository.abstracts.AddressRepository;
+import com.etiya.ecommerscedemopair5.repository.abstracts.AddressTitleRepository;
 import com.etiya.ecommerscedemopair5.repository.abstracts.CityRepository;
+import com.etiya.ecommerscedemopair5.repository.abstracts.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +36,9 @@ public class AddressManager implements AddressService {
     private CityService cityService;
     private CustomerService customerService;*/
     private CityRepository cityRepository;
+    private final AddressTitleRepository addressTitleRepository;
+    private final CustomerRepository customerRepository;
+
     @Override
     public List<Address> getAll() {
         return addressRepository.findAll();
@@ -56,6 +63,9 @@ public class AddressManager implements AddressService {
     @Override
     public AddAddressResponse addAddress(AddAddressRequest addAddressRequest) {
 
+        checkIfExistsCityId(addAddressRequest.getCityId());
+        checkIfExistsAddressTitleId(addAddressRequest.getAddressTitleId());
+        checkIfExistsCustomerId(addAddressRequest.getCustomerId());
         Address address =
                 modelMapperService.forRequest().map(addAddressRequest,Address.class);
         AddAddressResponse addAddressResponse =
@@ -64,11 +74,22 @@ public class AddressManager implements AddressService {
         return addAddressResponse;
 
     }
-
     public void checkIfExistsCityId(int id){
         boolean isExists = cityRepository.existsById(id);
         if (!isExists){
-            throw new RuntimeException("This city not found");
+            throw new BusinessException(Messages.City.runTimeException);
+        }
+    }
+    public void checkIfExistsAddressTitleId(int id){
+        boolean isExists = addressRepository.existsById(id);
+        if (!isExists){
+            throw new BusinessException(Messages.AddressTitle.runTimeException);
+        }
+    }
+    public void checkIfExistsCustomerId(int id){
+        boolean isExists = customerRepository.existsById(id);
+        if (!isExists){
+            throw new BusinessException(Messages.Customer.runTimeException);
         }
     }
 
