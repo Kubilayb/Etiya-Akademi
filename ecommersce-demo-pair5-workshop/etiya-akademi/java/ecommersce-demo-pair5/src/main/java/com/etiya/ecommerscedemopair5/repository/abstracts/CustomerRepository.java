@@ -12,15 +12,14 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 
     List <Customer> findAllById(int id);
 
-
     @Query("Select c From Customer as c WHERE firstname=:name")
     Customer findByCustomerFirstName(String name);
 
     @Query("Select c From Customer as c WHERE lastname=:name")
     Customer findByCustomerLastName(String name);
 
-
     List<Customer> findAll();
 
     Customer findById(int id);
+
 }

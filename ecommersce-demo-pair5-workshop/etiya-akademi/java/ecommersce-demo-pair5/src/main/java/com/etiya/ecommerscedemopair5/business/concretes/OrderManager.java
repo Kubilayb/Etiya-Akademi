@@ -1,13 +1,9 @@
 package com.etiya.ecommerscedemopair5.business.concretes;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.*;
-import com.etiya.ecommerscedemopair5.business.constants.Messages;
-import com.etiya.ecommerscedemopair5.business.dtos.OrderDTO;
 import com.etiya.ecommerscedemopair5.business.dtos.request.order.AddOrderRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.order.AddOrderResponse;
 import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
-import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
-import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.*;
 import com.etiya.ecommerscedemopair5.repository.abstracts.OrderRepository;
 import lombok.AllArgsConstructor;
@@ -48,13 +44,10 @@ public class OrderManager implements OrderService {
         String cargoComp = cargoCompany.toLowerCase();
         return orderRepository.getALlOrderByCargoCompany(cargoComp);
     }
-
    /* @Override
     public DataResult<List<OrderDTO>> getAddressTitlesOfOrders() {
         return new SuccessDataResult<>(orderRepository.getAddressTitlesOfOrders());
     }*/
-
-
     @Override
     public AddOrderResponse addOrder(AddOrderRequest addOrderRequest) {
 

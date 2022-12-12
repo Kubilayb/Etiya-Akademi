@@ -4,6 +4,7 @@ package com.etiya.ecommerscedemopair5.api.controllers;
 import com.etiya.ecommerscedemopair5.business.abstracts.CargoService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.cargo.AddCargoRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.cargo.AddCargoResponse;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.Cargo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,5 +61,8 @@ public class CargoController {
         return new ResponseEntity<AddCargoResponse>
                 (cargoService.addCargo(addCargoRequest), HttpStatus.CREATED);
     }
+
+
+
 
 }

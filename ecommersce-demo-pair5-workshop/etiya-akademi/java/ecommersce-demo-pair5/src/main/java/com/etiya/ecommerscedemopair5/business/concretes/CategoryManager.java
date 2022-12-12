@@ -1,9 +1,12 @@
 package com.etiya.ecommerscedemopair5.business.concretes;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.CategoryService;
+import com.etiya.ecommerscedemopair5.business.dtos.CategoryDTO;
 import com.etiya.ecommerscedemopair5.business.dtos.request.category.AddCategoryRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.category.AddCategoryResponse;
 import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
+import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.Category;
 import com.etiya.ecommerscedemopair5.repository.abstracts.CategoryRepository;
 import lombok.AllArgsConstructor;
@@ -31,6 +34,12 @@ public class CategoryManager implements CategoryService {
         return categoryRepository.findById(id).orElseThrow();
     }
 
+
+
+
+
+
+
     // JPA Repository SAVE methodu, eklenen veriyi geri döner.
     @Override
     public AddCategoryResponse addCategory(AddCategoryRequest addCategoryRequest) {
@@ -49,6 +58,12 @@ public class CategoryManager implements CategoryService {
                 modelMapperService.getMapper().map(savedCategory,AddCategoryResponse.class);
 
         return response;
+    }
+
+    @Override
+    public DataResult<List<CategoryDTO>> findByCategoryExample(int id) {
+        List<CategoryDTO> response = categoryRepository.findByCategoryExample(id);
+        return new SuccessDataResult<List<CategoryDTO>>(response);
     }
 
     private void categoryCanNotExistWithSameName(String name){

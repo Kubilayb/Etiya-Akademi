@@ -4,10 +4,10 @@ import com.etiya.ecommerscedemopair5.business.abstracts.CargoService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.cargo.AddCargoRequest;
 
 import com.etiya.ecommerscedemopair5.business.dtos.response.cargo.AddCargoResponse;
-import com.etiya.ecommerscedemopair5.business.dtos.response.size.AddSizeResponse;
 import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
+import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.Cargo;
-import com.etiya.ecommerscedemopair5.entities.concretes.Size;
 import com.etiya.ecommerscedemopair5.repository.abstracts.CargoRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -42,13 +42,11 @@ public class CargoManager implements CargoService {
     public List<Cargo> getAllByPrice(int price) {
         return cargoRepository.findAllByPrice(price);
     }
-*/
+    */
     @Override
     public Cargo getByName(String name) {
         return cargoRepository.findByName(name);
     }
-
-
 
     @Override
     public AddCargoResponse addCargo(AddCargoRequest addCargoRequest) {
@@ -59,9 +57,9 @@ public class CargoManager implements CargoService {
                 modelMapperService.getMapper().map(cargoRepository.save(cargo),AddCargoResponse.class);
         return addCargoResponse;
     }
+
+
 }
-
-
        /* Cargo cargo = new Cargo();
         cargo.setName(addCargoRequest.getName());
         cargo.setPrice(addCargoRequest.getPrice());

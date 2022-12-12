@@ -66,7 +66,6 @@ public class ProductManager implements ProductService {
         AddProductResponse addProductResponse =
                 modelMapperService.forResponse().map(productRepository.save(product),AddProductResponse.class);
         return addProductResponse;
-
     }
 }
         /* Product product = new Product();

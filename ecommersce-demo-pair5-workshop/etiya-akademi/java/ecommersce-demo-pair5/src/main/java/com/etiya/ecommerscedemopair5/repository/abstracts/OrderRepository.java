@@ -1,11 +1,8 @@
 package com.etiya.ecommerscedemopair5.repository.abstracts;
 
-import com.etiya.ecommerscedemopair5.business.dtos.OrderDTO;
-import com.etiya.ecommerscedemopair5.business.dtos.response.order.AddOrderResponse;
 import com.etiya.ecommerscedemopair5.entities.concretes.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 

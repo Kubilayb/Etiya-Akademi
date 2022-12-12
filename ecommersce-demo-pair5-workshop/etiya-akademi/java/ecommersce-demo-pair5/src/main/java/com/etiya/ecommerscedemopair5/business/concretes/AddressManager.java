@@ -4,10 +4,14 @@ import com.etiya.ecommerscedemopair5.business.abstracts.AddressService;
 import com.etiya.ecommerscedemopair5.business.abstracts.AddressTitleService;
 import com.etiya.ecommerscedemopair5.business.abstracts.CityService;
 import com.etiya.ecommerscedemopair5.business.abstracts.CustomerService;
+import com.etiya.ecommerscedemopair5.business.dtos.AddressDTO;
+import com.etiya.ecommerscedemopair5.business.dtos.CategoryDTO;
 import com.etiya.ecommerscedemopair5.business.dtos.request.address.AddAddressRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.address.AddAddressResponse;
 import com.etiya.ecommerscedemopair5.business.dtos.response.payment.AddPaymentResponse;
 import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
+import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.*;
 import com.etiya.ecommerscedemopair5.repository.abstracts.AddressRepository;
 import com.etiya.ecommerscedemopair5.repository.abstracts.CityRepository;
@@ -40,6 +44,15 @@ public class AddressManager implements AddressService {
     public List<Address> getByName(String street) {
         return addressRepository.findByName(street);
     }
+
+
+    @Override
+    public DataResult<List<AddressDTO>> findByAddressExample(int id) {
+        List<AddressDTO> response = addressRepository.findByAddressExample(id);
+        return new SuccessDataResult<List<AddressDTO>>(response);
+    }
+
+
     @Override
     public AddAddressResponse addAddress(AddAddressRequest addAddressRequest) {
 

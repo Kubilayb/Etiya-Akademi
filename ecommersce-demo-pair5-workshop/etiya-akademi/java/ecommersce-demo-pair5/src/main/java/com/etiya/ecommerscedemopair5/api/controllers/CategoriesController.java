@@ -1,8 +1,10 @@
 package com.etiya.ecommerscedemopair5.api.controllers;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.CategoryService;
+import com.etiya.ecommerscedemopair5.business.dtos.CategoryDTO;
 import com.etiya.ecommerscedemopair5.business.dtos.request.category.AddCategoryRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.category.AddCategoryResponse;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.Category;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,14 @@ public class CategoriesController {
     // client
     // server
     // DTO => Data Transfer Object
+
+    @GetMapping("/findByCategoryExampleDTO")
+    public DataResult<List<CategoryDTO>> findByCategoryExample(int id){
+        return this.categoryService.findByCategoryExample(id);
+    }
+
+
+
     // AddCategoryRequest => name,type
     // ResponseEntity
     @PostMapping("/add")
