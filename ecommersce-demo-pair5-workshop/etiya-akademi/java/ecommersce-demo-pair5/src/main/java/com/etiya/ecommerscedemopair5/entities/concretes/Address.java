@@ -1,6 +1,7 @@
 package com.etiya.ecommerscedemopair5.entities.concretes;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +37,7 @@ public class Address {
 
     @ManyToOne
     @JoinColumn(name = "customerid")
+   // @JsonIgnoreProperties("address")
     private Customer customers;
 
     @OneToMany(mappedBy = "address")

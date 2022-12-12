@@ -36,9 +36,9 @@ public class ColorManager implements ColorService {
     public AddColorsResponse addColor(AddColorsRequest addColorRequest) {
         // MAPPING => AUTO MAPPER
         Color color =
-                modelMapperService.getMapper().map(addColorRequest,Color.class);
+                modelMapperService.forRequest().map(addColorRequest,Color.class);
         AddColorsResponse addColorsResponse =
-                modelMapperService.getMapper().map(colorRepository.save(color),AddColorsResponse.class);
+                modelMapperService.forResponse().map(colorRepository.save(color),AddColorsResponse.class);
         return addColorsResponse;
     }
 }

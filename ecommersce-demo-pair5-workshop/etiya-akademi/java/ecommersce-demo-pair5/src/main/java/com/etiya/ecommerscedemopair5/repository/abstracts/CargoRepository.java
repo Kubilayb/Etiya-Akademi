@@ -9,7 +9,6 @@ import java.util.List;
 
 public interface CargoRepository extends JpaRepository<Cargo,Integer> {
 
-
     List<Cargo> findAllCargosByPriceGreaterThanOrderByPriceDesc(int price);
 
    // List<Cargo> findAllByPrice(int price);

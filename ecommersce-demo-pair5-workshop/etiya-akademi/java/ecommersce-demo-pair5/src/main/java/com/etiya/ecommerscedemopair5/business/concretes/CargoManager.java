@@ -54,12 +54,14 @@ public class CargoManager implements CargoService {
     public AddCargoResponse addCargo(AddCargoRequest addCargoRequest) {
         // MAPPING => AUTO MAPPER
         Cargo cargo =
-                modelMapperService.getMapper().map(addCargoRequest,Cargo.class);
+                modelMapperService.forRequest().map(addCargoRequest,Cargo.class);
         AddCargoResponse addCargoResponse =
                 modelMapperService.getMapper().map(cargoRepository.save(cargo),AddCargoResponse.class);
         return addCargoResponse;
     }
 }
+
+
        /* Cargo cargo = new Cargo();
         cargo.setName(addCargoRequest.getName());
         cargo.setPrice(addCargoRequest.getPrice());

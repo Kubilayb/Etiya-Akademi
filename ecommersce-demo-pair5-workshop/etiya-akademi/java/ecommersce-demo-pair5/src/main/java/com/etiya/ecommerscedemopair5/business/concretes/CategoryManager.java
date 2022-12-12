@@ -55,9 +55,10 @@ public class CategoryManager implements CategoryService {
 
         boolean isExists = categoryRepository.existsCategoryByName(name);
         if(isExists) // Veritabanımda bu isimde bir kategori mevcut!!
-
+                // add custom business exception
             throw new RuntimeException("Bu isimle bir kategori zaten mevcut!");
     }
+}
 
 /*
 
@@ -69,4 +70,3 @@ public class CategoryManager implements CategoryService {
 
      private void categoryCanNotExistWithSameName(String name){
         //exception fırlat }*/
-}

@@ -38,7 +38,7 @@ public class AddressTitleManager implements AddressTitleService {
     public AddAddressTitleResponse addAddressTitle(AddAddressTittleRequest addAddressTitleRequest) {
         // MAPPING => AUTO MAPPER
         AddressTitle addressTitle =
-                modelMapperService.getMapper().map(addAddressTitleRequest,AddressTitle.class);
+                modelMapperService.forRequest().map(addAddressTitleRequest,AddressTitle.class);
         AddAddressTitleResponse addAddressTitleResponse=
                 modelMapperService.getMapper().map(addressTitleRepository.save(addressTitle),AddAddressTitleResponse.class);
         return addAddressTitleResponse;

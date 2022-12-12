@@ -43,9 +43,9 @@ public class CityManager implements CityService {
     public AddCityResponse addCity(AddCityRequest addCityRequest) {
         // MAPPING => AUTO MAPPER
         City city =
-                modelMapperService.getMapper().map(addCityRequest,City.class);
+                modelMapperService.forRequest().map(addCityRequest,City.class);
         AddCityResponse addCityResponse =
-                modelMapperService.getMapper().map(cityRepository.save(city),AddCityResponse.class);
+                modelMapperService.forResponse().map(cityRepository.save(city),AddCityResponse.class);
         return addCityResponse;
     }
 }

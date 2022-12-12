@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Product {
 
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,10 +32,10 @@ public class Product {
     @Column(name = "stock")
     private double stock;
 
-    @ManyToOne  //Eğer tabloda many gittiyse ManytoOne yazılır
+    @ManyToOne  //Eğer tabloda many gittiyse manytoOne yazılır
     @JoinColumn(name = "colorsizeid")
     @JsonIgnore
-    private ColorSizeRelation colorSizeRelation;
+    private ColorSizeRelation colorSize;
 
     @OneToMany(mappedBy = "product")
     @JsonIgnore

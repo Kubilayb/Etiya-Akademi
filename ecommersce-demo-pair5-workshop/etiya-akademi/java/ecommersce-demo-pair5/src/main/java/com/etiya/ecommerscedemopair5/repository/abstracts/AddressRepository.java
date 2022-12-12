@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface AddressRepository extends JpaRepository<Address,Integer> {
 
-
     @Query("Select a from Address as a WHERE street=:name")
     List<Address> findByName(String name);
+
+
 
 }

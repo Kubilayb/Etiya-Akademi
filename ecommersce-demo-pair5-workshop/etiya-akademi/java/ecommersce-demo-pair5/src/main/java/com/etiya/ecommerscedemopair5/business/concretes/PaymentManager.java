@@ -21,8 +21,6 @@ import java.util.List;
 public class PaymentManager implements PaymentService {
     private PaymentRepository paymentRepository;
 
-    //private MoneyTypeService moneyTypeService;
-
     private ModelMapperService modelMapperService;
 
     @Override
@@ -40,9 +38,9 @@ public class PaymentManager implements PaymentService {
         // MAPPING => AUTO MAPPER
 
         Payment payment =
-                modelMapperService.getMapper().map(addPaymentRequest,Payment.class);
+                modelMapperService.forRequest().map(addPaymentRequest,Payment.class);
         AddPaymentResponse addPaymentResponse =
-                modelMapperService.getMapper().map(paymentRepository.save(payment),AddPaymentResponse.class);
+                modelMapperService.forResponse().map(paymentRepository.save(payment),AddPaymentResponse.class);
         return addPaymentResponse;
     }
 }

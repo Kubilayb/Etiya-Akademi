@@ -1,11 +1,8 @@
 package com.etiya.ecommerscedemopair5.business.concretes;
 
-import com.etiya.ecommerscedemopair5.business.abstracts.ColorService;
 import com.etiya.ecommerscedemopair5.business.abstracts.ColorSizeRelationService;
-import com.etiya.ecommerscedemopair5.business.abstracts.SizeService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.colorsizerelation.AddColorSizeRelationRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.colorsizerelation.AddColorSizeRelationResponse;
-import com.etiya.ecommerscedemopair5.business.dtos.response.product.AddProductResponse;
 import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommerscedemopair5.entities.concretes.*;
 import com.etiya.ecommerscedemopair5.repository.abstracts.ColorSizeRepository;
@@ -39,13 +36,12 @@ public class ColorSizeRelationManager implements ColorSizeRelationService {
         // MAPPING => AUTO MAPPER
 
         ColorSizeRelation colorSizeRelation =
-                modelMapperService.getMapper().map(addColorSizeRelationRequest,ColorSizeRelation.class);
+                modelMapperService.forRequest().map(addColorSizeRelationRequest,ColorSizeRelation.class);
         AddColorSizeRelationResponse addColorSizeRelationResponse =
-                modelMapperService.getMapper().map(colorSizeRepository.save(colorSizeRelation),AddColorSizeRelationResponse.class);
+                modelMapperService.forResponse().map(colorSizeRepository.save(colorSizeRelation),AddColorSizeRelationResponse.class);
         return addColorSizeRelationResponse;
     }
 }
-
        /* ColorSizeRelation colorSizeRelation = new ColorSizeRelation();
 
         Color color = colorService.getById(addColorSizeRelationRequest.getColorId());

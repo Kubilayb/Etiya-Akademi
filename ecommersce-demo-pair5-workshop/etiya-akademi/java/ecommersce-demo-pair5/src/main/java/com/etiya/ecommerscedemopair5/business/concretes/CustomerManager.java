@@ -42,16 +42,16 @@ public class CustomerManager implements CustomerService {
 
     @Override
     public List<Customer> getAllNameAsc(int id) {
-        return customerRepository.findAllCustomerById(id);
+        return customerRepository.findAllByCustomerId(id);
     }
 
     @Override
     public AddCustomerResponse addCustomer(AddCustomerRequest addCustomerRequest) {
 
         Customer customer =
-                modelMapperService.getMapper().map(addCustomerRequest,Customer.class);
+                modelMapperService.forRequest().map(addCustomerRequest,Customer.class);
         AddCustomerResponse addCustomerResponse =
-                modelMapperService.getMapper().map(customerRepository.save(customer),AddCustomerResponse.class);
+                modelMapperService.forResponse().map(customerRepository.save(customer),AddCustomerResponse.class);
         return addCustomerResponse;
     }
 }

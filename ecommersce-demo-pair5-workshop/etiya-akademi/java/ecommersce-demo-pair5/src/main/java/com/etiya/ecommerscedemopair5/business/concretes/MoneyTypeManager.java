@@ -41,9 +41,9 @@ public class MoneyTypeManager implements MoneyTypeService {
     public AddMoneyTypeResponse addMoneyType(AddMoneyTypeRequest addMoneyTypeRequest) {
 
         MoneyType moneyType =
-                modelMapperService.getMapper().map(addMoneyTypeRequest,MoneyType.class);
+                modelMapperService.forRequest().map(addMoneyTypeRequest,MoneyType.class);
         AddMoneyTypeResponse addMoneyTypeResponse =
-                modelMapperService.getMapper().map(moneyTypeRepository.save(moneyType),AddMoneyTypeResponse.class);
+                modelMapperService.forResponse().map(moneyTypeRepository.save(moneyType),AddMoneyTypeResponse.class);
         return addMoneyTypeResponse;
     }
 }

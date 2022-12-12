@@ -12,9 +12,9 @@ import lombok.Setter;
 public class AddOrderResponse {
     private int id;
     private java.sql.Date date;
-    private int customerId;
-    private int addressId;
-    private int paymentId;
-    private int cargoId;
-    private int productId;
+    private int customerid;
+    private int addressid;
+    private int paymentid;
+    private int cargoid;
+    private int productid;
 }

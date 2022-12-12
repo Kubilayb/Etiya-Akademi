@@ -46,9 +46,9 @@ public class ProductCategoryManager implements ProductCategoryService {
         // MAPPING => AUTO MAPPER
 
        ProductCategory productCategory =
-                modelMapperService.getMapper().map(productCategoryRepository,ProductCategory.class);
+                modelMapperService.forRequest().map(productCategoryRepository,ProductCategory.class);
         AddProductCategoryResponse addProductCategoryResponse =
-                modelMapperService.getMapper().map(productCategoryRepository.save(productCategory),
+                modelMapperService.forResponse().map(productCategoryRepository.save(productCategory),
                         AddProductCategoryResponse.class);
         return addProductCategoryResponse;
     }

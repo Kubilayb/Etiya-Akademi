@@ -1,8 +1,11 @@
 package com.etiya.ecommerscedemopair5.api.controllers;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.OrderService;
+import com.etiya.ecommerscedemopair5.business.dtos.OrderDTO;
 import com.etiya.ecommerscedemopair5.business.dtos.request.order.AddOrderRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.order.AddOrderResponse;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
+import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.Order;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,4 +40,14 @@ public class OrderController{
     public ResponseEntity<AddOrderResponse> addOrder(@RequestBody AddOrderRequest addOrderRequest){
         return new ResponseEntity<AddOrderResponse>(orderService.addOrder(addOrderRequest), HttpStatus.CREATED);
     }
+    @GetMapping("/getALlOrderByCargoCompany")
+    public List<Order> getALlOrderByCargoCompany(@RequestParam(value = "cargoCompany")String cargoCompany){
+        return orderService.getALlOrderByCargoCompany(cargoCompany);
+    }
+
+    /*@GetMapping("/getAddressTitlesOfOrders")
+    public DataResult<List<OrderDTO>> getAddressTitlesOfOrders(){
+        return new SuccessDataResult<List<OrderDTO>>(orderService.getAddressTitlesOfOrders().getData());
+    }*/
+
 }

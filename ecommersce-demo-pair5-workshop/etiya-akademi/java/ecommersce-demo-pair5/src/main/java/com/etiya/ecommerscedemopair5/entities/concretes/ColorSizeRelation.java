@@ -19,11 +19,10 @@ public class ColorSizeRelation {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
+    //colorSizeRelation.colorSizeId
     @ManyToOne
     @JoinColumn(name = "colorid")
     private Color color;
-
     @ManyToOne
     @JoinColumn(name = "sizeid")
     private Size size;

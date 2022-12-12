@@ -12,5 +12,5 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Setter
 public class AddPaymentRequest {
-    private int moneytypeid;
+    private int moneyTypeId;
 }

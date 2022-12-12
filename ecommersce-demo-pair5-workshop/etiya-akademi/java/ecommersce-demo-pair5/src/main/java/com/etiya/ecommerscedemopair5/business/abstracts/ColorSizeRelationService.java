@@ -9,5 +9,7 @@ import java.util.List;
 public interface ColorSizeRelationService {
     List<ColorSizeRelation> getAll();
     ColorSizeRelation getById(int id);
+
     AddColorSizeRelationResponse addColorSizeRelation(AddColorSizeRelationRequest addColorSizeRelationRequest);
+
 }

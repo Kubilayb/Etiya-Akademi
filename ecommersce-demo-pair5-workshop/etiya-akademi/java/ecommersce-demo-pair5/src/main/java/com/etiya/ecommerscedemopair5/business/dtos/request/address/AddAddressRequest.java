@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AddAddressRequest {
-    private int addresstitleId;
+    private int addressTitleId;
     private String street;
     private int cityId;
     private int customerId;

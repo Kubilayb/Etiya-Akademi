@@ -46,9 +46,9 @@ public class SizeManager implements SizeService {
     public AddSizeResponse addSize(AddSizeRequest addSizeRequest) {
 
         Size size =
-                modelMapperService.getMapper().map(addSizeRequest,Size.class);
+                modelMapperService.forRequest().map(addSizeRequest,Size.class);
         AddSizeResponse addSizeResponse =
-                modelMapperService.getMapper().map(sizeRepository.save(size),AddSizeResponse.class);
+                modelMapperService.forResponse().map(sizeRepository.save(size),AddSizeResponse.class);
         return addSizeResponse;
     }
 }

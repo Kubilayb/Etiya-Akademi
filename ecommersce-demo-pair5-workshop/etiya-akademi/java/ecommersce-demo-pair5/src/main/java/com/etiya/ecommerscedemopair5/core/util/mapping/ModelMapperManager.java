@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ModelMapperManager implements ModelMapperService{
 
+            // !!
+    // response => ambiguity true, strategy loose
+    //request => ambiguity true, strategty standart
     private ModelMapper modelMapper;
 
     public ModelMapper getMapper(){
@@ -19,4 +22,18 @@ public class ModelMapperManager implements ModelMapperService{
         return this.modelMapper;
     }
 
+    @Override
+    public ModelMapper forResponse() {
+        this.modelMapper.getConfiguration().
+                setAmbiguityIgnored(true).
+                setMatchingStrategy(MatchingStrategies.LOOSE);
+        return this.modelMapper;
+    }
+    @Override
+    public ModelMapper forRequest() {
+        this.modelMapper.getConfiguration().
+                setAmbiguityIgnored(true).
+                setMatchingStrategy(MatchingStrategies.STANDARD);
+        return this.modelMapper;
+    }
 }

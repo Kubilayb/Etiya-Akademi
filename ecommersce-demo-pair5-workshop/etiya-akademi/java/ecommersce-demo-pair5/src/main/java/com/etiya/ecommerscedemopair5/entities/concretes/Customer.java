@@ -16,13 +16,11 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Customer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private int customerId;
 
     @Column(name = "firstname")
     private String firstname;
@@ -43,5 +41,4 @@ public class Customer {
     @OneToMany(mappedBy = "customers")
     @JsonIgnore
     private List<Address> address;
-
 }

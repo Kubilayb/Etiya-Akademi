@@ -28,4 +28,6 @@ public class Color {
     @JsonIgnore
     private List<ColorSizeRelation> colorSizeRelations;
 
+
+
 }

@@ -44,9 +44,9 @@ public class AddressManager implements AddressService {
     public AddAddressResponse addAddress(AddAddressRequest addAddressRequest) {
 
         Address address =
-                modelMapperService.getMapper().map(addressRepository,Address.class);
+                modelMapperService.forRequest().map(addAddressRequest,Address.class);
         AddAddressResponse addAddressResponse =
-                modelMapperService.getMapper().map(addressRepository.save(address),
+                modelMapperService.forResponse().map(addressRepository.save(address),
                         AddAddressResponse.class);
         return addAddressResponse;
 

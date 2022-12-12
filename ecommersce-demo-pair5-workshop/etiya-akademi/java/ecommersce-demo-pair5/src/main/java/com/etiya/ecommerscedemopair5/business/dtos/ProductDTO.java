@@ -1,15 +1,16 @@
-package com.etiya.ecommerscedemopair5.business.dtos.response.payment;
+package com.etiya.ecommerscedemopair5.business.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@AllArgsConstructor
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Setter
-public class AddPaymentResponse {
+public class ProductDTO {
     private int id;
-    private int moneyTypeId;
+    private String name;
+
 }

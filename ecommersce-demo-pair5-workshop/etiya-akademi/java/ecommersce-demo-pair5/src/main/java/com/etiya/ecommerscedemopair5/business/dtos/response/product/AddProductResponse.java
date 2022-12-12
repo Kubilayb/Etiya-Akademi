@@ -15,5 +15,5 @@ public class AddProductResponse {
     private String name;
     private double unitPrice;
     private double stock;
-    private ColorSizeRelation colorSizeRelation;
+    private int colorSizeId;
 }
