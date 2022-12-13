@@ -1,6 +1,7 @@
 package com.etiya.ecommerscedemopair5.business.concretes;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.CargoService;
+import com.etiya.ecommerscedemopair5.business.constants.Messages;
 import com.etiya.ecommerscedemopair5.business.dtos.request.cargo.AddCargoRequest;
 
 import com.etiya.ecommerscedemopair5.business.dtos.response.cargo.AddCargoResponse;
@@ -25,17 +26,23 @@ public class CargoManager implements CargoService {
     private ModelMapperService modelMapperService;
 
     @Override
-    public List<Cargo> getAll() {
-        return cargoRepository.findAll();
+    public DataResult<List<Cargo>> getAll() {
+        List<Cargo> response = this.cargoRepository.findAll();
+        return new SuccessDataResult<List<Cargo>>(response, Messages.Cargo.getAllCargo);
+
     }
 
     @Override
-    public Cargo getById(int id) {
-        return cargoRepository.findById(id).orElseThrow();
+    public DataResult<Cargo> getById(int id) {
+        Cargo response = this.cargoRepository.findById(id).orElseThrow();
+        return new SuccessDataResult<Cargo>(response,Messages.Cargo.getByCargoId);
+
     }
     @Override
-    public List<Cargo> getAllByPriceValueGreaterThan(int price) {
-        return cargoRepository.findAllCargosByPriceGreaterThanOrderByPriceDesc(price);
+    public DataResult<List<Cargo>> getAllByPriceValueGreaterThan(int price) {
+        List<Cargo> response = this.cargoRepository.findAllCargosByPriceGreaterThanOrderByPriceDesc(price);
+        return new SuccessDataResult<List<Cargo>>(response,Messages.Cargo.getByCargoPrice);
+
     }
 
    /* @Override
@@ -44,21 +51,21 @@ public class CargoManager implements CargoService {
     }
     */
     @Override
-    public Cargo getByName(String name) {
-        return cargoRepository.findByName(name);
+    public DataResult<Cargo> getByName(String name) {
+        Cargo response = this.cargoRepository.findByName(name);
+        return new SuccessDataResult<Cargo>(response,Messages.Cargo.getByCargoName);
     }
 
+
     @Override
-    public AddCargoResponse addCargo(AddCargoRequest addCargoRequest) {
+    public DataResult<AddCargoResponse> addCargo(AddCargoRequest addCargoRequest) {
         // MAPPING => AUTO MAPPER
         Cargo cargo =
                 modelMapperService.forRequest().map(addCargoRequest,Cargo.class);
         AddCargoResponse addCargoResponse =
                 modelMapperService.getMapper().map(cargoRepository.save(cargo),AddCargoResponse.class);
-        return addCargoResponse;
+        return new SuccessDataResult<AddCargoResponse>(addCargoResponse,Messages.Cargo.addCargo);
     }
-
-
 }
        /* Cargo cargo = new Cargo();
         cargo.setName(addCargoRequest.getName());

@@ -1,5 +1,6 @@
 package com.etiya.ecommerscedemopair5.repository.abstracts;
 
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.Cargo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

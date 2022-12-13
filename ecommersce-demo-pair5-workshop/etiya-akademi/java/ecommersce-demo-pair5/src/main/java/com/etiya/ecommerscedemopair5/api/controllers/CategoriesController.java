@@ -22,7 +22,7 @@ public class CategoriesController {
 
     // GetCategoryResponse => id,name
     @GetMapping("/getAll")
-    public List<Category> getAll(){
+    public DataResult<List<Category>> getAll(){
         return categoryService.getAll();
     }
     // client
@@ -39,7 +39,7 @@ public class CategoriesController {
     // AddCategoryRequest => name,type
     // ResponseEntity
     @PostMapping("/add")
-    public ResponseEntity<AddCategoryResponse> addCategory(@RequestBody @Valid AddCategoryRequest addCategoryRequest){
-        return new ResponseEntity<AddCategoryResponse>(categoryService.addCategory(addCategoryRequest), HttpStatus.CREATED);
+    public ResponseEntity<DataResult<AddCategoryResponse>> addCategory(@RequestBody @Valid AddCategoryRequest addCategoryRequest){
+        return new ResponseEntity<DataResult<AddCategoryResponse>>(categoryService.addCategory(addCategoryRequest), HttpStatus.CREATED);
     }
 }

@@ -11,14 +11,18 @@ import java.util.List;
 
 public interface AddressService {
 
-    List<Address> getAll();
+    DataResult<List<Address>> getAll();
 
-    Address getById(int id);
+    DataResult<Address> getById(int id);
 
-    List<Address> getByName(String street);
+    DataResult<List<Address>> getByName(String street);
 
     DataResult<List<AddressDTO>> findByAddressExample(int id);
 
-    AddAddressResponse addAddress(AddAddressRequest addAddressRequest);
+/*
+    List<Address> customAddress(int id);
+*/
+
+    DataResult<AddAddressResponse> addAddress(AddAddressRequest addAddressRequest);
 
 }

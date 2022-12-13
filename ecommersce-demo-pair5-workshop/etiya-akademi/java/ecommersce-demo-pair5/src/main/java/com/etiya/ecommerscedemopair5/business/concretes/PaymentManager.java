@@ -2,11 +2,14 @@ package com.etiya.ecommerscedemopair5.business.concretes;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.MoneyTypeService;
 import com.etiya.ecommerscedemopair5.business.abstracts.PaymentService;
+import com.etiya.ecommerscedemopair5.business.constants.Messages;
 import com.etiya.ecommerscedemopair5.business.dtos.request.payment.AddPaymentRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.city.AddCityResponse;
 import com.etiya.ecommerscedemopair5.business.dtos.response.payment.AddPaymentResponse;
 import com.etiya.ecommerscedemopair5.business.dtos.response.product.AddProductResponse;
 import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
+import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.MoneyType;
 import com.etiya.ecommerscedemopair5.entities.concretes.Payment;
 import com.etiya.ecommerscedemopair5.entities.concretes.Product;
@@ -14,6 +17,7 @@ import com.etiya.ecommerscedemopair5.repository.abstracts.PaymentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 @Service
@@ -24,24 +28,26 @@ public class PaymentManager implements PaymentService {
     private ModelMapperService modelMapperService;
 
     @Override
-    public List<Payment> getAll() {
-        return paymentRepository.findAll();
+    public DataResult<List<Payment>> getAll() {
+        List<Payment> response = this.paymentRepository.findAll();
+        return new SuccessDataResult<List<Payment>>(response, Messages.Payment.getAllPayment);
     }
 
     @Override
-    public Payment getById(int id) {
-        return paymentRepository.findById(id).orElseThrow();
+    public DataResult<Payment> getById(int id) {
+        Payment response = this.paymentRepository.findById(id).orElseThrow();
+        return new SuccessDataResult<Payment>(response,Messages.Payment.getByPaymentId);
     }
 
     @Override
-    public AddPaymentResponse addPayment(AddPaymentRequest addPaymentRequest) {
+    public DataResult<AddPaymentResponse> addPayment(AddPaymentRequest addPaymentRequest) {
         // MAPPING => AUTO MAPPER
 
         Payment payment =
                 modelMapperService.forRequest().map(addPaymentRequest,Payment.class);
         AddPaymentResponse addPaymentResponse =
                 modelMapperService.forResponse().map(paymentRepository.save(payment),AddPaymentResponse.class);
-        return addPaymentResponse;
+        return new SuccessDataResult<AddPaymentResponse>(addPaymentResponse,Messages.Payment.addPayment);
     }
 }
     /*Payment payment = new Payment();

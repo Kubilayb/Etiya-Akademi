@@ -1,10 +1,13 @@
 package com.etiya.ecommerscedemopair5.business.concretes;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.ColorService;
+import com.etiya.ecommerscedemopair5.business.constants.Messages;
 import com.etiya.ecommerscedemopair5.business.dtos.request.colors.AddColorsRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.calors.AddColorsResponse;
 import com.etiya.ecommerscedemopair5.business.dtos.response.size.AddSizeResponse;
 import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
+import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.Color;
 import com.etiya.ecommerscedemopair5.entities.concretes.Size;
 import com.etiya.ecommerscedemopair5.repository.abstracts.ColorRepository;
@@ -19,27 +22,30 @@ public class ColorManager implements ColorService {
     private ColorRepository colorRepository;
     private ModelMapperService modelMapperService;
 
+    // SAYFALAMA
+    // FİLTRELEME
+
     @Override
-    public List<Color> getAll() {
-        // SAYFALAMA
-        // FİLTRELEME
-        return colorRepository.findAll();
+    public DataResult<List<Color>> getAll() {
+        List<Color> response=this.colorRepository.findAll();
+        return new SuccessDataResult<List<Color>>(response, Messages.Color.getAllColors);
     }
 
     @Override
-    public Color getById(int id) {
-        return colorRepository.findById(id).orElseThrow();
+    public DataResult<Color> getById(int id) {
+        Color response = this.colorRepository.findById(id).orElseThrow();
+        return new SuccessDataResult<Color>(response,Messages.Color.getByColorId);
     }
 
     // JPA Repository SAVE methodu, eklenen veriyi geri döner.
     @Override
-    public AddColorsResponse addColor(AddColorsRequest addColorRequest) {
+    public DataResult<AddColorsResponse> addColor(AddColorsRequest addColorRequest) {
         // MAPPING => AUTO MAPPER
         Color color =
                 modelMapperService.forRequest().map(addColorRequest,Color.class);
         AddColorsResponse addColorsResponse =
                 modelMapperService.forResponse().map(colorRepository.save(color),AddColorsResponse.class);
-        return addColorsResponse;
+        return new SuccessDataResult<AddColorsResponse>(addColorsResponse,Messages.Color.addColor);
     }
 }
         /*Color color = new Color();

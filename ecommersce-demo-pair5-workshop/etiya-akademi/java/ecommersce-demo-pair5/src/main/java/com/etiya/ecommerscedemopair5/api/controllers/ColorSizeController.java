@@ -3,6 +3,7 @@ package com.etiya.ecommerscedemopair5.api.controllers;
 import com.etiya.ecommerscedemopair5.business.abstracts.ColorSizeRelationService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.colorsizerelation.AddColorSizeRelationRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.colorsizerelation.AddColorSizeRelationResponse;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.Category;
 import com.etiya.ecommerscedemopair5.entities.concretes.ColorSizeRelation;
 import lombok.AllArgsConstructor;
@@ -19,7 +20,7 @@ public class ColorSizeController {
 
     // GetCategoryResponse => id,name
     @GetMapping("/getAll")
-    public List<ColorSizeRelation> getAll(){
+    public DataResult<List<ColorSizeRelation>> getAll(){
         return colorSizeRelationService.getAll();
     }
 
@@ -29,7 +30,7 @@ public class ColorSizeController {
     // AddCategoryRequest => name,type
     // ResponseEntity
     @PostMapping("/add")
-    public ResponseEntity<AddColorSizeRelationResponse> addColorSizeRelation(@RequestBody AddColorSizeRelationRequest addColorSizeRelationRequest){
-        return new ResponseEntity<AddColorSizeRelationResponse>(colorSizeRelationService.addColorSizeRelation(addColorSizeRelationRequest), HttpStatus.CREATED);
+    public ResponseEntity<DataResult<AddColorSizeRelationResponse>> addColorSizeRelation(@RequestBody AddColorSizeRelationRequest addColorSizeRelationRequest){
+        return new ResponseEntity<DataResult<AddColorSizeRelationResponse>>(colorSizeRelationService.addColorSizeRelation(addColorSizeRelationRequest), HttpStatus.CREATED);
     }
 }

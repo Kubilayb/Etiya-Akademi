@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface CargoService {
 
-        List<Cargo> getAll();
+        DataResult<List<Cargo>> getAll();
        // List<Cargo> getAllByPrice(int price); ////????
-        Cargo getById(int id);
-        List<Cargo> getAllByPriceValueGreaterThan(int price);
-        Cargo getByName(String name);
-        AddCargoResponse addCargo(AddCargoRequest addCargoRequest);
+        DataResult<Cargo> getById(int id);
+        DataResult<List<Cargo>> getAllByPriceValueGreaterThan(int price);
+        DataResult<Cargo> getByName(String name);
+        DataResult<AddCargoResponse> addCargo(AddCargoRequest addCargoRequest);
 
 }
 

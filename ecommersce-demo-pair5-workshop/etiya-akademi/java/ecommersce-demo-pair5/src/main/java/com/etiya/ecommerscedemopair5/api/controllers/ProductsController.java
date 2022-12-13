@@ -9,6 +9,10 @@ import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
 import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,21 +39,21 @@ public class ProductsController {
     }
 
     @GetMapping("/getById")
-    public Product getById(@RequestParam("id") int id){
+    public DataResult<Product> getById(@RequestParam("id") int id){
         return productService.getById(id);
     }
     @GetMapping("{id}")
-    public Product getByIdPath(@PathVariable int id){
+    public DataResult<Product>  getByIdPath(@PathVariable int id){
         return productService.getById(id);
     }
 
     @GetMapping("/getByStockGreaterThan")
-    public List<Product> getAllByStock(@RequestParam("stock") double stock){
+    public DataResult<List<Product>> getAllByStock(@RequestParam("stock") double stock){
         return productService.getAllByStockGreaterThan(stock);
     }
 
     @GetMapping("/getByName")
-    public Product getByName(@RequestParam("name") String name){
+    public DataResult<Product> getByName(@RequestParam("name") String name){
         return productService.getByName(name);
     }
 
@@ -59,14 +63,36 @@ public class ProductsController {
     }
 */
     @PostMapping("/add")
-    public ResponseEntity<AddProductResponse> addProduct(@RequestBody @Valid AddProductRequest addProductRequest){
-        return new ResponseEntity<AddProductResponse>(productService.addProduct(addProductRequest), HttpStatus.CREATED);
+    public ResponseEntity<DataResult<AddProductResponse>> addProduct(@RequestBody @Valid AddProductRequest addProductRequest){
+        return new ResponseEntity<DataResult<AddProductResponse>>(productService.addProduct(addProductRequest), HttpStatus.CREATED);
     }
 
     @GetMapping("/findByExampleDTO")
     public DataResult<List<ProductDTO>> findByExample(int id){
         return this.productService.findByExample(id);
     }
+
+
+    @GetMapping("getWithPagination")
+    // RequestParam => page, pageSize
+    public Page<Product> getWithPagination(@RequestParam("page")int page,@RequestParam("pageSize")int pageSize){
+        Pageable pageable = PageRequest.of(page,pageSize);
+
+        return productService.findAllWithPagination(pageable);
+    }
+    public Slice<Product> getWithSlice(@RequestParam("page")int page, @RequestParam("pageSize")int pageSize){
+        Pageable pageable = PageRequest.of(page,pageSize);
+
+        return productService.findAllWithSlice(pageable);
+    }
+    /*
+    public Page<ProductDTO>
+            getAllProductDTO(@RequestParam("page")int page, @RequestParam("pageSize")int pageSize){
+        Pageable pageable = PageRequest.of(page,pageSize);
+
+        return productService.findAllWithPaginationDto(pageable);
+    }*/
+
 
 }
 

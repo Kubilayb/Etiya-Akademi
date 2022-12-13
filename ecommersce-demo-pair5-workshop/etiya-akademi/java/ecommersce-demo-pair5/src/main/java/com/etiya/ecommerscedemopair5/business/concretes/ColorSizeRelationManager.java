@@ -1,9 +1,12 @@
 package com.etiya.ecommerscedemopair5.business.concretes;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.ColorSizeRelationService;
+import com.etiya.ecommerscedemopair5.business.constants.Messages;
 import com.etiya.ecommerscedemopair5.business.dtos.request.colorsizerelation.AddColorSizeRelationRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.colorsizerelation.AddColorSizeRelationResponse;
 import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
+import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.*;
 import com.etiya.ecommerscedemopair5.repository.abstracts.ColorSizeRepository;
 import lombok.AllArgsConstructor;
@@ -22,24 +25,26 @@ public class ColorSizeRelationManager implements ColorSizeRelationService {
     private ModelMapperService modelMapperService;
 
     @Override
-    public List<ColorSizeRelation> getAll() {
-        return colorSizeRepository.findAll();
+    public DataResult<List<ColorSizeRelation>> getAll() {
+        List<ColorSizeRelation> response = this.colorSizeRepository.findAll();
+        return new SuccessDataResult<List<ColorSizeRelation>>(response,Messages.ColorSizeRelation.getAllColorSize);
     }
 
     @Override
-    public ColorSizeRelation getById(int id) {
-        return colorSizeRepository.findById(id).orElseThrow();
+    public DataResult<ColorSizeRelation> getById(int id) {
+        ColorSizeRelation response = this.colorSizeRepository.findById(id).orElseThrow();
+        return new SuccessDataResult<ColorSizeRelation>(response,Messages.ColorSizeRelation.getByColorSizeId);
     }
 
     @Override
-    public AddColorSizeRelationResponse addColorSizeRelation(AddColorSizeRelationRequest addColorSizeRelationRequest) {
+    public DataResult<AddColorSizeRelationResponse> addColorSizeRelation(AddColorSizeRelationRequest addColorSizeRelationRequest) {
         // MAPPING => AUTO MAPPER
 
         ColorSizeRelation colorSizeRelation =
                 modelMapperService.forRequest().map(addColorSizeRelationRequest,ColorSizeRelation.class);
         AddColorSizeRelationResponse addColorSizeRelationResponse =
                 modelMapperService.forResponse().map(colorSizeRepository.save(colorSizeRelation),AddColorSizeRelationResponse.class);
-        return addColorSizeRelationResponse;
+        return new SuccessDataResult<AddColorSizeRelationResponse>(addColorSizeRelationResponse,Messages.ColorSizeRelation.addColorSize);
     }
 }
        /* ColorSizeRelation colorSizeRelation = new ColorSizeRelation();

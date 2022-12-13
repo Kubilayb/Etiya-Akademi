@@ -1,10 +1,14 @@
 package com.etiya.ecommerscedemopair5.business.concretes;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.CustomerService;
+import com.etiya.ecommerscedemopair5.business.constants.Messages;
 import com.etiya.ecommerscedemopair5.business.dtos.request.customer.AddCustomerRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.customer.AddCustomerResponse;
 import com.etiya.ecommerscedemopair5.business.dtos.response.payment.AddPaymentResponse;
 import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
+import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
+import com.etiya.ecommerscedemopair5.entities.concretes.City;
 import com.etiya.ecommerscedemopair5.entities.concretes.Customer;
 import com.etiya.ecommerscedemopair5.entities.concretes.Payment;
 import com.etiya.ecommerscedemopair5.repository.abstracts.CustomerRepository;
@@ -21,38 +25,43 @@ public class CustomerManager implements CustomerService {
     private ModelMapperService modelMapperService;
 
     @Override
-    public List<Customer> getAll() {
-        return customerRepository.findAll();
+    public DataResult<List<Customer>> getAll() {
+        List<Customer> response = this.customerRepository.findAll();
+        return new SuccessDataResult<List<Customer>>(response, Messages.Customer.getAllCustomers);
     }
 
     @Override
-    public Customer getById(int id) {
-        return customerRepository.findById(id);
+    public DataResult<Customer> getById(int id) {
+        Customer response = this.customerRepository.findById(id);
+        return new SuccessDataResult<Customer>(response,Messages.Customer.getByCustomerId);
     }
 
     @Override
-    public Customer getByFirstName(String name) {
-        return customerRepository.findByCustomerFirstName(name);
+    public DataResult<Customer> getByFirstName(String name) {
+        Customer response= this.customerRepository.findByCustomerFirstName(name);
+        return new SuccessDataResult<Customer>(response,Messages.Customer.getCustomerFirstName);
     }
 
     @Override
-    public Customer getByLastName(String name) {
-        return customerRepository.findByCustomerLastName(name);
+    public DataResult<Customer> getByLastName(String name) {
+        Customer response = this.customerRepository.findByCustomerLastName(name);
+        return new SuccessDataResult<Customer>(response,Messages.Customer.getCustomerLastName);
     }
 
-    @Override
-    public List<Customer> getAllNameAsc(int id) {
-        return customerRepository.findAllById(id);
-    }
+   /* @Override
+    public DataResult<List<Customer>> getAllNameAsc(int id) {
+        List<Customer> response = this.customerRepository.findByAllName(id);
+        return new SuccessDataResult<List<Customer>>(response,Messages.Customer.getAllNameAsc);
+    }*/
 
     @Override
-    public AddCustomerResponse addCustomer(AddCustomerRequest addCustomerRequest) {
+    public DataResult<AddCustomerResponse> addCustomer(AddCustomerRequest addCustomerRequest) {
 
         Customer customer =
                 modelMapperService.forRequest().map(addCustomerRequest,Customer.class);
         AddCustomerResponse addCustomerResponse =
                 modelMapperService.forResponse().map(customerRepository.save(customer),AddCustomerResponse.class);
-        return addCustomerResponse;
+        return new SuccessDataResult<AddCustomerResponse>(addCustomerResponse,Messages.Customer.addCustomer);
     }
 }
 

@@ -3,6 +3,7 @@ package com.etiya.ecommerscedemopair5.api.controllers;
 import com.etiya.ecommerscedemopair5.business.abstracts.MoneyTypeService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.moneytype.AddMoneyTypeRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.moneytype.AddMoneyTypeResponse;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.MoneyType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,22 +25,22 @@ public class MoneyTypeController {
     }
 
     @GetMapping("/getAll")
-    public List<MoneyType> getAll(){
+    public DataResult<List<MoneyType>> getAll(){
         return moneyTypeService.getAll();
     }
     @GetMapping("/getById")
-    public MoneyType getById(@RequestParam("id") int id){
+    public DataResult<MoneyType> getById(@RequestParam("id") int id){
         return moneyTypeService.getById(id);
     }
 
     @GetMapping("/getByName")
-    public MoneyType getByName(@RequestParam("Money Type  Name") String name){
+    public DataResult<MoneyType> getByName(@RequestParam("Money Type Name") String name){
         return moneyTypeService.getByName(name);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<AddMoneyTypeResponse> addMoneyType(@RequestBody AddMoneyTypeRequest addMoneyTypeRequest){
-        return new ResponseEntity<AddMoneyTypeResponse>
+    public ResponseEntity<DataResult<AddMoneyTypeResponse>> addMoneyType(@RequestBody AddMoneyTypeRequest addMoneyTypeRequest){
+        return new ResponseEntity<DataResult<AddMoneyTypeResponse>>
                 (moneyTypeService.addMoneyType(addMoneyTypeRequest), HttpStatus.CREATED);
     }
 

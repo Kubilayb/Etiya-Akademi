@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 public class ProductDTO {
+    // AllArgs varsa önce id sonra nama yani sırayla
     private int id;
     private String name;
 

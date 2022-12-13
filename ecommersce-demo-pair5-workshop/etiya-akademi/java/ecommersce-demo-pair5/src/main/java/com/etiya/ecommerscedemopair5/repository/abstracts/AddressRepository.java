@@ -18,4 +18,7 @@ public interface AddressRepository extends JpaRepository<Address,Integer> {
             " from Address a WHERE a.id=:id")
     List<AddressDTO> findByAddressExample(int id);
 
+/*    @Query("Select c from City c join c.id=:id")
+    List<Address> customAddress(int id);*/
 }
+

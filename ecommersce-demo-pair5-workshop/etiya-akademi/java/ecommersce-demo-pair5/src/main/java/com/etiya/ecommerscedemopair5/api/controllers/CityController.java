@@ -3,6 +3,7 @@ package com.etiya.ecommerscedemopair5.api.controllers;
 import com.etiya.ecommerscedemopair5.business.abstracts.CityService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.city.AddCityRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.city.AddCityResponse;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.City;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,23 +25,23 @@ public class CityController {
     }
 
     @GetMapping("/getAll")
-    public List<City> getAll(){
+    public DataResult<List<City>> getAll(){
         return cityService.getAll();
     }
 
     @GetMapping("/getById")
-    public City getById(@RequestParam("id") int id){
+    public DataResult<City> getById(@RequestParam("id") int id){
         return cityService.getById(id);
     }
 
     @GetMapping("{id}")
-    public City getByIdPath(@PathVariable int id){
+    public DataResult<City> getByIdPath(@PathVariable int id){
         return cityService.getById(id);
     }
 
 
     @GetMapping("/getByName")
-    public City getByName(@RequestParam("name") String name){
+    public DataResult<City> getByName(@RequestParam("name") String name){
         return cityService.getByName(name);
     }
 
@@ -50,7 +51,7 @@ public class CityController {
     // AddCategoryRequest => name,type
     // ResponseEntity
     @PostMapping("/add")
-    public ResponseEntity<AddCityResponse> addCity(@RequestBody AddCityRequest addCityRequest){
-        return new ResponseEntity<AddCityResponse>(cityService.addCity(addCityRequest), HttpStatus.CREATED);
+    public ResponseEntity<DataResult<AddCityResponse>> addCity(@RequestBody AddCityRequest addCityRequest){
+        return new ResponseEntity<DataResult<AddCityResponse>>(cityService.addCity(addCityRequest), HttpStatus.CREATED);
     }
 }

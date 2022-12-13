@@ -40,16 +40,19 @@ public class AddressManager implements AddressService {
     private final CustomerRepository customerRepository;
 
     @Override
-    public List<Address> getAll() {
-        return addressRepository.findAll();
+    public DataResult<List<Address>> getAll() {
+        List<Address> response = this.addressRepository.findAll();
+        return new SuccessDataResult<List<Address>>(response,Messages.Address.getAllAddress);
     }
     @Override
-    public Address getById(int id) {
-        return addressRepository.findById(id).orElseThrow();
+    public DataResult<Address> getById(int id) {
+        Address response = this.addressRepository.findById(id).orElseThrow();
+        return new SuccessDataResult<Address>(response,Messages.Address.getByAddressId);
     }
     @Override
-    public List<Address> getByName(String street) {
-        return addressRepository.findByName(street);
+    public DataResult<List<Address>> getByName(String street) {
+        List<Address> response = this.addressRepository.findByName(street);
+        return new SuccessDataResult<List<Address>>(response,Messages.Address.getByAddressName);
     }
 
 
@@ -59,9 +62,14 @@ public class AddressManager implements AddressService {
         return new SuccessDataResult<List<AddressDTO>>(response);
     }
 
+ /*   @Override
+    public List<Address> customAddress(int id) {
+        return addressRepository.customAddress(id);
+    }
+*/
 
     @Override
-    public AddAddressResponse addAddress(AddAddressRequest addAddressRequest) {
+    public DataResult<AddAddressResponse> addAddress(AddAddressRequest addAddressRequest) {
 
         checkIfExistsCityId(addAddressRequest.getCityId());
         checkIfExistsAddressTitleId(addAddressRequest.getAddressTitleId());
@@ -71,25 +79,25 @@ public class AddressManager implements AddressService {
         AddAddressResponse addAddressResponse =
                 modelMapperService.forResponse().map(addressRepository.save(address),
                         AddAddressResponse.class);
-        return addAddressResponse;
+        return new SuccessDataResult<AddAddressResponse>(addAddressResponse,Messages.Address.addAddress);
 
     }
     public void checkIfExistsCityId(int id){
         boolean isExists = cityRepository.existsById(id);
         if (!isExists){
-            throw new BusinessException(Messages.City.runTimeException);
+            throw new BusinessException(Messages.City.runTimeExceptionCity);
         }
     }
     public void checkIfExistsAddressTitleId(int id){
         boolean isExists = addressRepository.existsById(id);
         if (!isExists){
-            throw new BusinessException(Messages.AddressTitle.runTimeException);
+            throw new BusinessException(Messages.AddressTitle.runTimeExceptionAddressTitle);
         }
     }
     public void checkIfExistsCustomerId(int id){
         boolean isExists = customerRepository.existsById(id);
         if (!isExists){
-            throw new BusinessException(Messages.Customer.runTimeException);
+            throw new BusinessException(Messages.Customer.runTimeExceptionCustomer);
         }
     }
 

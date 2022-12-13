@@ -2,6 +2,7 @@ package com.etiya.ecommerscedemopair5.business.concretes;
 
 
 import com.etiya.ecommerscedemopair5.business.abstracts.ProductService;
+import com.etiya.ecommerscedemopair5.business.constants.Messages;
 import com.etiya.ecommerscedemopair5.business.dtos.ProductDTO;
 import com.etiya.ecommerscedemopair5.business.dtos.request.product.AddProductRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.product.AddProductResponse;
@@ -11,9 +12,13 @@ import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.Product;
 import com.etiya.ecommerscedemopair5.repository.abstracts.ProductRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -27,20 +32,24 @@ public class ProductManager implements ProductService {
 
     @Override
     public DataResult<List<Product>> getAll() {
-        return new SuccessDataResult<List<Product>>(productRepository.findAll(),"Data Listelendi");
+        List<Product> response= this.productRepository.findAll();
+        return new SuccessDataResult<List<Product>>(response,Messages.Product.getAllProducts);
     }
 
     @Override
-    public Product getById(int id) {
-        return productRepository.findById(id).orElseThrow();
+    public DataResult<Product> getById(int id) {
+        Product response = this.productRepository.findById(id).orElseThrow();
+        return new SuccessDataResult<Product>(response,Messages.Product.getByProductId);
     }
     @Override
-    public List<Product> getAllByStockGreaterThan(double stock) {
-        return productRepository.findAllProductsByStockGreaterThanOrderByStockDesc(stock);
+    public DataResult<List<Product>> getAllByStockGreaterThan(double stock) {
+        List<Product> response = this.productRepository.findAllProductsByStockGreaterThanOrderByStockDesc(stock);
+        return new SuccessDataResult<List<Product>>(response,Messages.Product.getByProductStock);
     }
     @Override
-    public Product getByName(String name) {
-        return productRepository.findByName(name);
+    public DataResult<Product> getByName(String name) {
+        Product response = this.productRepository.findByName(name);
+        return new SuccessDataResult<Product>(response,Messages.Product.getByProductName);
     }
 
     @Override
@@ -52,22 +61,37 @@ public class ProductManager implements ProductService {
         // return new SuccessDataResult<ProductDTO>(response,"Bu ürün listelendi"); (this.productRepository.findByExample(id)
     }
 
+    @Override
+    public Page<Product> findAllWithPagination(Pageable pageable) {
+        return productRepository.findAll(pageable);
+    }
+
+    @Override
+    public Slice<Product> findAllWithSlice(Pageable pageable) {
+        return productRepository.getAllWithSlice(pageable);
+    }
+
+
+
     /*  @Override
       public List<Product> findTopSellingProductById(int id, int addressid) {
           return productRepository.findTopSellingProductById(id,addressid);
       }
-  */
+     */
+
+
     @Override
-    public AddProductResponse addProduct(AddProductRequest addProductRequest) {
+    public DataResult<AddProductResponse> addProduct(AddProductRequest addProductRequest) {
         // MAPPING => AUTO MAPPER
 
         Product product =
                 modelMapperService.forRequest().map(addProductRequest,Product.class);
         AddProductResponse addProductResponse =
                 modelMapperService.forResponse().map(productRepository.save(product),AddProductResponse.class);
-        return addProductResponse;
+        return new SuccessDataResult<AddProductResponse>(addProductResponse,Messages.Product.addProduct);
     }
 }
+
         /* Product product = new Product();
 
         product.setName(addProductRequest.getName());

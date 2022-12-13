@@ -1,9 +1,12 @@
 package com.etiya.ecommerscedemopair5.business.concretes;
 
 import com.etiya.ecommerscedemopair5.business.abstracts.ProductCategoryService;
+import com.etiya.ecommerscedemopair5.business.constants.Messages;
 import com.etiya.ecommerscedemopair5.business.dtos.request.productcategory.AddProductCategoryRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.productcategory.AddProductCategoryResponse;
 import com.etiya.ecommerscedemopair5.core.util.mapping.ModelMapperService;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
+import com.etiya.ecommerscedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.ProductCategory;
 import com.etiya.ecommerscedemopair5.repository.abstracts.ProductCategoryRepository;
 import lombok.AllArgsConstructor;
@@ -20,13 +23,15 @@ public class ProductCategoryManager implements ProductCategoryService {
     private ModelMapperService modelMapperService;
 
     @Override
-    public List<ProductCategory> getAll() {
-        return productCategoryRepository.findAll();
+    public DataResult<List<ProductCategory>> getAll() {
+        List<ProductCategory> response=this.productCategoryRepository.findAll();
+        return new SuccessDataResult<List<ProductCategory>>(response,Messages.ProductCategory.getAllProductCategory);
     }
 
     @Override
-    public ProductCategory getById(int id) {
-        return productCategoryRepository.findById(id).orElseThrow();
+    public DataResult<ProductCategory> getById(int id) {
+        ProductCategory response = this.productCategoryRepository.findById(id).orElseThrow();
+        return new SuccessDataResult<ProductCategory>(response,Messages.ProductCategory.getByProductCategoryId);
     }
 
     /*@Override
@@ -42,7 +47,7 @@ public class ProductCategoryManager implements ProductCategoryService {
     }
 */
     @Override
-    public AddProductCategoryResponse addProductCategory(AddProductCategoryRequest addProductCategoryRequest) {
+    public DataResult<AddProductCategoryResponse> addProductCategory(AddProductCategoryRequest addProductCategoryRequest) {
         // MAPPING => AUTO MAPPER
 
        ProductCategory productCategory =
@@ -50,7 +55,7 @@ public class ProductCategoryManager implements ProductCategoryService {
         AddProductCategoryResponse addProductCategoryResponse =
                 modelMapperService.forResponse().map(productCategoryRepository.save(productCategory),
                         AddProductCategoryResponse.class);
-        return addProductCategoryResponse;
+        return new SuccessDataResult<AddProductCategoryResponse>(addProductCategoryResponse, Messages.ProductCategory.addProductCategory);
     }
 
 }

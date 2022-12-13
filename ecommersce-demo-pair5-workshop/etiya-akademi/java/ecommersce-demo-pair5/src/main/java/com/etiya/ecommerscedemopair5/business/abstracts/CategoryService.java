@@ -9,9 +9,9 @@ import com.etiya.ecommerscedemopair5.entities.concretes.Category;
 import java.util.List;
 
 public interface CategoryService {
-    List<Category> getAll();
-    Category getById(int id);
-    AddCategoryResponse addCategory(AddCategoryRequest addCategoryRequest);
+    DataResult<List<Category>> getAll();
+    DataResult<Category> getById(int id);
+    DataResult<AddCategoryResponse> addCategory(AddCategoryRequest addCategoryRequest);
 
     DataResult<List<CategoryDTO>> findByCategoryExample(int id);
 }

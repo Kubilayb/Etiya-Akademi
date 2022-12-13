@@ -24,12 +24,12 @@ public class AddressController {
         this.addressService=addressService;
     }
     @GetMapping("/getAll")
-    public List<Address> getAll() {
+    public DataResult<List<Address>> getAll() {
         return addressService.getAll();
     }
 
     @GetMapping("{id}")
-    public Address getById(@PathVariable int id){
+    public DataResult<Address> getById(@PathVariable int id){
         return addressService.getById(id);
     }
 
@@ -38,12 +38,17 @@ public class AddressController {
         return this.addressService.findByAddressExample(id);
     }
 
+   /* @GetMapping("/customAddress")
+    public List<Address> customAddress(int id){
+        return addressService.customAddress(id);
+    }*/
+
 
 
 
     @PostMapping("/add")
-   public ResponseEntity<AddAddressResponse> addAddress(@RequestBody AddAddressRequest addAddressRequest){
-        return new ResponseEntity<AddAddressResponse>(addressService.addAddress(addAddressRequest), HttpStatus.CREATED);
+   public ResponseEntity<DataResult<AddAddressResponse>> addAddress(@RequestBody AddAddressRequest addAddressRequest){
+        return new ResponseEntity<DataResult<AddAddressResponse>>(addressService.addAddress(addAddressRequest), HttpStatus.CREATED);
    }
 
 }

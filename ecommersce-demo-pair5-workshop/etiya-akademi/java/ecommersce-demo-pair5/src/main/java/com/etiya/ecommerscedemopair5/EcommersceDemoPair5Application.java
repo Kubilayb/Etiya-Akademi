@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -18,7 +19,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver;
 
+
+import java.util.Locale;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -36,6 +41,30 @@ public class EcommersceDemoPair5Application {
 	public ModelMapper getModelMapper(){
 		return new ModelMapper();
 	}
+
+	@Bean
+	public ResourceBundleMessageSource bundleMessageSource(){
+		// Veritabanı bağlantısı..
+		// Dosyadan çekme işlemi..
+		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		// Konfigurasyonlar
+		messageSource.setBasename("messages");
+		//
+		return messageSource;
+	}
+
+	// Kullanıcıdan dil tercihini header alanından al..
+	// Accept-Language
+	@Bean
+	public LocaleResolver localeResolver(){
+		AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
+		localeResolver.setDefaultLocale(Locale.US);
+		return localeResolver;
+	}
+
+
+
+
 
 	// Global Exception Handling-Handler
 	// Global Exception Handling-Handler
@@ -72,7 +101,7 @@ public class EcommersceDemoPair5Application {
 	public Result NotFoundException(ChangeSetPersister.NotFoundException exception){
 		return new ErrorResult(Messages.Exception.noSuchException);
 	}
-
 	// fonksiyon oluştur => @ExeptionHandler ile handler olduğunu söyle
 	// =>Parametre olarak yakalayacağı exeption türünü ver.
+
 }

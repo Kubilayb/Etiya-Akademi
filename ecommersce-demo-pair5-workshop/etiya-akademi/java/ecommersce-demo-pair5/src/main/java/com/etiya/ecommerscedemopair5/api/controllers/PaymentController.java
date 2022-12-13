@@ -3,6 +3,7 @@ package com.etiya.ecommerscedemopair5.api.controllers;
 import com.etiya.ecommerscedemopair5.business.abstracts.PaymentService;
 import com.etiya.ecommerscedemopair5.business.dtos.request.payment.AddPaymentRequest;
 import com.etiya.ecommerscedemopair5.business.dtos.response.payment.AddPaymentResponse;
+import com.etiya.ecommerscedemopair5.core.util.results.DataResult;
 import com.etiya.ecommerscedemopair5.entities.concretes.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,18 +24,18 @@ public class PaymentController {
     }
 
     @GetMapping("/getAll")
-    public List<Payment> getAll(){
+    public DataResult<List<Payment>> getAll(){
         return paymentService.getAll();
     }
 
     @GetMapping("/getById")
-    public Payment getById(@RequestParam("id") int id){
+    public DataResult<Payment> getById(@RequestParam("id") int id){
         return paymentService.getById(id);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<AddPaymentResponse> addPayment(@RequestBody AddPaymentRequest addPaymentRequest){
-        return new ResponseEntity<AddPaymentResponse>(paymentService.addPayment(addPaymentRequest), HttpStatus.CREATED);
+    public ResponseEntity<DataResult<AddPaymentResponse>> addPayment(@RequestBody AddPaymentRequest addPaymentRequest){
+        return new ResponseEntity<DataResult<AddPaymentResponse>>(paymentService.addPayment(addPaymentRequest), HttpStatus.CREATED);
     }
 
 }
