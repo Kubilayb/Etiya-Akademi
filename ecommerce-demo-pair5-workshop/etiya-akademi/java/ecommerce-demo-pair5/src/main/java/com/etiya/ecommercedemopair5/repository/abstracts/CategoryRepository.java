@@ -14,7 +14,7 @@ public interface CategoryRepository extends JpaRepository<Category,Integer> {
 
     boolean existsCategoryByName(String name);
 
-    @Query("Select new com.etiya.ecommerscedemopair5.business.dtos.CategoryDTO" +
+    @Query("Select new com.etiya.ecommercedemopair5.business.dtos.CategoryDTO" +
             "(ca.id,ca.name,ca.type)" +
             " from Category ca WHERE ca.id=:id")
     List<CategoryDTO> findByCategoryExample(int id);

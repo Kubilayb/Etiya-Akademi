@@ -24,7 +24,7 @@ public interface ProductRepository extends JpaRepository<Product,Integer> {
     Product findByName(String name);
 
     // com.etiya.ecommerscedemopair5.business.dtos.ProductDTO
-    @Query("Select new com.etiya.ecommerscedemopair5.business.dtos.ProductDTO(p.id,p.name)" +
+    @Query("Select new com.etiya.ecommercedemopair5.business.dtos.ProductDTO(p.id,p.name)" +
             " from Product p WHERE p.id=:id")
     List<ProductDTO> findByExample(int id);
 
