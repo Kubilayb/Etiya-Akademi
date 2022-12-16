@@ -1,5 +1,6 @@
 package com.etiya.ecommercedemopair5.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,6 +44,10 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "productid")
     private Product product;
+
+    @OneToOne(mappedBy = "order")
+    @JsonIgnore
+    private Invoice invoice;
 
 
 }

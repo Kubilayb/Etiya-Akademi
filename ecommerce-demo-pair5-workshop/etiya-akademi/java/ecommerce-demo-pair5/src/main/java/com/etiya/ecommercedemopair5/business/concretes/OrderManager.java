@@ -2,6 +2,7 @@ package com.etiya.ecommercedemopair5.business.concretes;
 
 import com.etiya.ecommercedemopair5.business.abstracts.*;
 import com.etiya.ecommercedemopair5.business.constants.Messages;
+import com.etiya.ecommercedemopair5.business.dtos.request.invoice.AddInvoiceRequest;
 import com.etiya.ecommercedemopair5.business.dtos.request.order.AddOrderRequest;
 import com.etiya.ecommercedemopair5.business.dtos.response.order.AddOrderResponse;
 import com.etiya.ecommercedemopair5.core.util.mapping.ModelMapperService;
@@ -19,11 +20,15 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class OrderManager implements OrderService {
+public class
+OrderManager implements OrderService {
 
     private OrderRepository orderRepository;
 
     private ModelMapperService modelMapperService;
+
+    private InvoiceService invoiceService;
+
 
    /* private CustomerService customerService;
     private AddressService addressService;
@@ -67,9 +72,13 @@ public class OrderManager implements OrderService {
     public DataResult<AddOrderResponse> addOrder(AddOrderRequest addOrderRequest) {
 
         Order order = modelMapperService.forRequest().map(addOrderRequest,Order.class);
-        AddOrderResponse addOrderResponse =
-                modelMapperService.forResponse().map(orderRepository.save(order),AddOrderResponse.class);
-        return new SuccessDataResult<AddOrderResponse>(addOrderResponse,Messages.Order.addOrder);
+        Order saveOrder = orderRepository.save(order);
+        AddOrderResponse response = modelMapperService.forResponse().map(saveOrder,AddOrderResponse.class);
+        AddInvoiceRequest invoiceRequest = AddInvoiceRequest.
+                builder().
+                orderId(saveOrder.getId()).orderDate(saveOrder.getOrderDate()).build();
+        invoiceService.addInvoice(invoiceRequest);
+        return new SuccessDataResult<>(response,Messages.Order.addOrder);
     }
 }
     /*
@@ -109,4 +118,11 @@ public class OrderManager implements OrderService {
         return response;
      */
 
+
+    /*
+    Order order = modelMapperService.forRequest().map(addOrderRequest,Order.class);
+        AddOrderResponse addOrderResponse =
+                modelMapperService.forResponse().map(orderRepository.save(order),AddOrderResponse.class);
+        return new SuccessDataResult<AddOrderResponse>(addOrderResponse,Messages.Order.addOrder);
+     */
 

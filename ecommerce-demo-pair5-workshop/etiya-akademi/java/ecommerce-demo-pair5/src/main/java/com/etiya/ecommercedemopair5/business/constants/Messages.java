@@ -80,7 +80,7 @@ public class Messages {
         public static final String CheckIfExistsColorId = "CheckIfExistsColorId";
         public static final String CheckIfExistsColorName = "CheckIfExistsColorName";
         public static final String addColor = "addColor";
-        public static final String getAllColors= "getAllColors";
+        public static final String getAllColors= "getAllColor";
         public static final String getByColorId = "getByColorId";
         public static final String runTimeExceptionColor = "runTimeExceptionColor";
         public static final String getByPage = "getByPage";
@@ -176,4 +176,14 @@ public class Messages {
         public static final String runTimeExceptionCargo = "runTimeExceptionCargo";
         public static final String getByPage = "getByPage";
     }
+
+
+            //---------------------Invoice-------------------------
+    public static class Invoice{
+        public static final String addInvoice = "addInvoice";
+
+
+
+    }
+
 }

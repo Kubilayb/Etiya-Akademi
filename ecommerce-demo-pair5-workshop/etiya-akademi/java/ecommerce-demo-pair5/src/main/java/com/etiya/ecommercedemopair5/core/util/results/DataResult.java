@@ -6,11 +6,11 @@ public class DataResult<T> extends Result{
 
     public DataResult(T data, boolean success, String message) {
         super(success,message);
-        this.data=data;
+        this.data=data;         //BURAYA THIS.DATA=DATA YAZDIK
     }
     public DataResult(T data, boolean success) {
         super(success);
-        this.data=data;        //BURAYA THIS.DATA=DATA YAZDIK
+        this.data=data;
     }
     public T getData(){
         return this.data;

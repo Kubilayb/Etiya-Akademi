@@ -32,7 +32,9 @@ public class ColorManager implements ColorService {
     @Override
     public DataResult<List<Color>> getAll() {
         List<Color> response=this.colorRepository.findAll();
-        return new SuccessDataResult<List<Color>>(response, Messages.Color.getAllColors);
+        return new SuccessDataResult<List<Color>>(response,
+                messageSource.getMessage(Messages.Color.getAllColors,null,LocaleContextHolder.getLocale()));
+
     }
 
     @Override
