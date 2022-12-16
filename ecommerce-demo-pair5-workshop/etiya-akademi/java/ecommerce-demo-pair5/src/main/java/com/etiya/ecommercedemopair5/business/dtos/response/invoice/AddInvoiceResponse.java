@@ -15,4 +15,5 @@ public class AddInvoiceResponse {
     private int id;
     private int orderId;
     private Date orderDate;
+
 }

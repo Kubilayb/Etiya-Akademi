@@ -24,7 +24,6 @@ public class InvoiceManager implements InvoiceService {
     private ModelMapperService modelMapperService;
     private MessageSource messageSource;
 
-
     @Override
     public DataResult<AddInvoiceResponse> addInvoice(AddInvoiceRequest addInvoiceRequest) {
         Invoice invoice = modelMapperService.forRequest().map(addInvoiceRequest, Invoice.class);

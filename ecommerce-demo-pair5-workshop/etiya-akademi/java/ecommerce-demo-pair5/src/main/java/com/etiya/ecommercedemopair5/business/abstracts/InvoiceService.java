@@ -7,4 +7,5 @@ import com.etiya.ecommercedemopair5.core.util.results.DataResult;
 public interface InvoiceService {
 
     DataResult<AddInvoiceResponse> addInvoice(AddInvoiceRequest addInvoiceRequest);
+
 }

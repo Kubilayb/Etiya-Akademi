@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;
@@ -69,6 +70,7 @@ OrderManager implements OrderService {
         return new SuccessDataResult<>(orderRepository.getAddressTitlesOfOrders());
     }*/
     @Override
+    @Transactional
     public DataResult<AddOrderResponse> addOrder(AddOrderRequest addOrderRequest) {
 
         Order order = modelMapperService.forRequest().map(addOrderRequest,Order.class);

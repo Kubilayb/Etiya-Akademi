@@ -13,7 +13,6 @@ import java.util.Date;
 public class AddInvoiceRequest {
     @Size(min = 6)
     private int orderId;
-
     private Date orderDate;
 
 }

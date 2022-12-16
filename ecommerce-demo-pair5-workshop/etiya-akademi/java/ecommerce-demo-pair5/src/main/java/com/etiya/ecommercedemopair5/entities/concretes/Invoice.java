@@ -20,12 +20,10 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private  int id;
-
     @OneToOne
     @JoinColumn(name = "orderid")
     @JsonIgnore
     private Order order;
-
     @Column(name = "date")
     private Date orderDate;
 

@@ -177,8 +177,7 @@ public class Messages {
         public static final String getByPage = "getByPage";
     }
 
-
-            //---------------------Invoice-------------------------
+                //---------------------Invoice-------------------------
     public static class Invoice{
         public static final String addInvoice = "addInvoice";
 
