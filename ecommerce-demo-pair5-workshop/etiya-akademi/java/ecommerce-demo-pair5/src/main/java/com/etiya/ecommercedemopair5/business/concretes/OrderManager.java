@@ -10,6 +10,8 @@ import com.etiya.ecommercedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.*;
 import com.etiya.ecommercedemopair5.repository.abstracts.OrderRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -51,6 +53,12 @@ public class OrderManager implements OrderService {
         List<Order> response = this.orderRepository.getALlOrderByCargoCompany(cargoCompany);
         return new SuccessDataResult<List<Order>>(response,Messages.Order.getAllOrderByCargoCompany);
     }
+
+    @Override
+    public Page<Order> findAllWithPagination(Pageable pageable) {
+        return orderRepository.findAll(pageable);
+    }
+
    /* @Override
     public DataResult<List<OrderDTO>> getAddressTitlesOfOrders() {
         return new SuccessDataResult<>(orderRepository.getAddressTitlesOfOrders());

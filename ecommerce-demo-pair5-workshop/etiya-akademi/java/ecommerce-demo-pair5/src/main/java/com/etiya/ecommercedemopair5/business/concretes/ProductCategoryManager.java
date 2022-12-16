@@ -10,6 +10,8 @@ import com.etiya.ecommercedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.ProductCategory;
 import com.etiya.ecommercedemopair5.repository.abstracts.ProductCategoryRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,6 +35,13 @@ public class ProductCategoryManager implements ProductCategoryService {
         ProductCategory response = this.productCategoryRepository.findById(id).orElseThrow();
         return new SuccessDataResult<ProductCategory>(response,Messages.ProductCategory.getByProductCategoryId);
     }
+
+    @Override
+    public Page<ProductCategory> findAllWithPagination(Pageable pageable) {
+        return productCategoryRepository.findAll(pageable);
+    }
+
+
 
     /*@Override
     public List<ProductCategory> getByProductId(int id) {

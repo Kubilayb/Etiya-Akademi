@@ -4,12 +4,17 @@ import com.etiya.ecommercedemopair5.business.abstracts.PaymentService;
 import com.etiya.ecommercedemopair5.business.constants.Messages;
 import com.etiya.ecommercedemopair5.business.dtos.request.payment.AddPaymentRequest;
 import com.etiya.ecommercedemopair5.business.dtos.response.payment.AddPaymentResponse;
+import com.etiya.ecommercedemopair5.core.util.exceptions.BusinessException;
 import com.etiya.ecommercedemopair5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemopair5.core.util.results.DataResult;
 import com.etiya.ecommercedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.Payment;
 import com.etiya.ecommercedemopair5.repository.abstracts.PaymentRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PaymentManager implements PaymentService {
     private PaymentRepository paymentRepository;
-
+    private MessageSource messageSource;
     private ModelMapperService modelMapperService;
 
     @Override
@@ -34,7 +39,14 @@ public class PaymentManager implements PaymentService {
     }
 
     @Override
+    public Page<Payment> findAllWithPagination(Pageable pageable) {
+        return paymentRepository.findAll(pageable);
+    }
+
+    @Override
     public DataResult<AddPaymentResponse> addPayment(AddPaymentRequest addPaymentRequest) {
+
+
         // MAPPING => AUTO MAPPER
 
         Payment payment =
@@ -43,6 +55,8 @@ public class PaymentManager implements PaymentService {
                 modelMapperService.forResponse().map(paymentRepository.save(payment),AddPaymentResponse.class);
         return new SuccessDataResult<AddPaymentResponse>(addPaymentResponse,Messages.Payment.addPayment);
     }
+
+
 }
     /*Payment payment = new Payment();
     MoneyType moneyType = moneyTypeService.getById(addPaymentRequest.getMoneytypeid());

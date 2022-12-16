@@ -41,7 +41,6 @@ public class EcommerceDemoPair5Application {
 	public ModelMapper getModelMapper(){
 		return new ModelMapper();
 	}
-
 	@Bean
 	public ResourceBundleMessageSource bundleMessageSource(){
 		// Veritabanı bağlantısı..
@@ -53,6 +52,7 @@ public class EcommerceDemoPair5Application {
 		return messageSource;
 	}
 
+
 	// Kullanıcıdan dil tercihini header alanından al..
 	// Accept-Language
 	@Bean
@@ -61,10 +61,6 @@ public class EcommerceDemoPair5Application {
 		localeResolver.setDefaultLocale(Locale.US);
 		return localeResolver;
 	}
-
-
-
-
 
 	// Global Exception Handling-Handler
 	// Global Exception Handling-Handler

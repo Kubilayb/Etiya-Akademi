@@ -9,6 +9,6 @@ public interface CityRepository extends JpaRepository<City,Integer> {
 
     City findByName(String name);
 
-    boolean existsByName(String name);
+    boolean existsCityByName(String name);
 
 }

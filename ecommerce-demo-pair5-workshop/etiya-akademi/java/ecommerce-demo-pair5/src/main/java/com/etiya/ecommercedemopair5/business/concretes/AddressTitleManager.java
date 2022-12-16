@@ -4,12 +4,18 @@ import com.etiya.ecommercedemopair5.business.abstracts.AddressTitleService;
 import com.etiya.ecommercedemopair5.business.constants.Messages;
 import com.etiya.ecommercedemopair5.business.dtos.request.addresstitle.AddAddressTittleRequest;
 import com.etiya.ecommercedemopair5.business.dtos.response.addresstitle.AddAddressTitleResponse;
+import com.etiya.ecommercedemopair5.core.util.exceptions.BusinessException;
 import com.etiya.ecommercedemopair5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemopair5.core.util.results.DataResult;
 import com.etiya.ecommercedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.AddressTitle;
+import com.etiya.ecommercedemopair5.entities.concretes.Product;
 import com.etiya.ecommercedemopair5.repository.abstracts.AddressTitleRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,8 +24,8 @@ import java.util.List;
 @AllArgsConstructor
 public class AddressTitleManager implements AddressTitleService {
     private AddressTitleRepository addressTitleRepository;
-
     private ModelMapperService modelMapperService;
+    private MessageSource messageSource;
 
     @Override
     public DataResult<List<AddressTitle>> getAll() {
@@ -41,7 +47,16 @@ public class AddressTitleManager implements AddressTitleService {
     }
 
     @Override
+    public Page<AddressTitle> findAllWithPagination(Pageable pageable) {
+        return addressTitleRepository.findAll(pageable);
+    }
+
+    @Override
     public DataResult<AddAddressTitleResponse> addAddressTitle(AddAddressTittleRequest addAddressTitleRequest) {
+
+        addressTitleCanNotExistWithSameName(addAddressTitleRequest.getName());
+
+
         // MAPPING => AUTO MAPPER
         AddressTitle addressTitle =
                 modelMapperService.forRequest().map(addAddressTitleRequest,AddressTitle.class);
@@ -50,6 +65,14 @@ public class AddressTitleManager implements AddressTitleService {
         return new SuccessDataResult<AddAddressTitleResponse>(addAddressTitleResponse,Messages.AddressTitle.addStreet);
 
     }
+    private void addressTitleCanNotExistWithSameName(String name) {
+        boolean isExists = addressTitleRepository.existsAddressTitleByName(name);
+        if (isExists) // Veritabanımda bu isimde bir adres başlığı mevcut!!
+            throw new BusinessException(messageSource.getMessage
+                    (Messages.AddressTitle.AddressTitleExistsWithSameName,null,LocaleContextHolder.getLocale()));
+
+    }
+
 }
 /* AddressTitle addressTitle = new AddressTitle();
         addressTitle.setName(addAddressTitleRequest.getName());

@@ -10,6 +10,8 @@ import com.etiya.ecommercedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.Customer;
 import com.etiya.ecommercedemopair5.repository.abstracts.CustomerRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,6 +45,11 @@ public class CustomerManager implements CustomerService {
     public DataResult<Customer> getByLastName(String name) {
         Customer response = this.customerRepository.findByCustomerLastName(name);
         return new SuccessDataResult<Customer>(response,Messages.Customer.getCustomerLastName);
+    }
+
+    @Override
+    public Page<Customer> findAllWithPagination(Pageable pageable) {
+        return customerRepository.findAll(pageable);
     }
 
    /* @Override

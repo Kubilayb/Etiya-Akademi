@@ -15,6 +15,8 @@ import com.etiya.ecommercedemopair5.repository.abstracts.SizeRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,6 +50,11 @@ public class CityManager implements CityService {
     }
 
     @Override
+    public Page<City> findAllWithPagination(Pageable pageable) {
+        return cityRepository.findAll(pageable);
+    }
+
+    @Override
     public DataResult<AddCityResponse> addCity(AddCityRequest addCityRequest) {
 
         checkIfExistsCityName(addCityRequest.getName());
@@ -60,18 +67,22 @@ public class CityManager implements CityService {
         return new SuccessDataResult<AddCityResponse>(addCityResponse, Messages.City.addCity);
     }
 
-
     private void checkIfExistsCityName(String name){
-        boolean isExists=cityRepository.existsByName(name);
+        boolean isExists=cityRepository.existsCityByName(name);
         if (isExists){
             throw new BusinessException(messageSource.getMessage
-                    (Messages.City.checkIfExistsCityName,null, LocaleContextHolder.getLocale())
-            );
+                    (Messages.City.checkIfExistsCityName,null, LocaleContextHolder.getLocale()));
         }
     }
 
 
+
+
 }
+
+
+
+
 /* City city = new City();
         city.setName(addCityRequest.getName());
 

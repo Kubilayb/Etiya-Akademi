@@ -84,6 +84,7 @@ public class ProductsController {
 
         return productService.findAllWithSlice(pageable);
     }
+
     /*
     public Page<ProductDTO>
             getAllProductDTO(@RequestParam("page")int page, @RequestParam("pageSize")int pageSize){

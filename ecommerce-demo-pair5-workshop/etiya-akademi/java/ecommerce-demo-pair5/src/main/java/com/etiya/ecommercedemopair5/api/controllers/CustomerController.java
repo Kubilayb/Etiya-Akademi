@@ -6,6 +6,9 @@ import com.etiya.ecommercedemopair5.business.dtos.response.customer.AddCustomerR
 import com.etiya.ecommercedemopair5.core.util.results.DataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,5 +61,13 @@ public class CustomerController {
     public ResponseEntity<DataResult<AddCustomerResponse>> addCustomer(@RequestBody AddCustomerRequest addCustomerRequest){
         return new ResponseEntity<DataResult<AddCustomerResponse>>
                 (customerService.addCustomer(addCustomerRequest),HttpStatus.CREATED);
+    }
+
+    @GetMapping("getWithPagination")
+    // RequestParam => page, pageSize
+    public Page<Customer> getWithPagination(@RequestParam("page")int page, @RequestParam("pageSize")int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        return customerService.findAllWithPagination(pageable);
     }
 }

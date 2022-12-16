@@ -4,6 +4,8 @@ import com.etiya.ecommercedemopair5.business.dtos.request.order.AddOrderRequest;
 import com.etiya.ecommercedemopair5.business.dtos.response.order.AddOrderResponse;
 import com.etiya.ecommercedemopair5.core.util.results.DataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.Order;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.sql.Date;
 import java.util.List;
@@ -20,4 +22,6 @@ public interface OrderService {
   /*  DataResult<List<OrderDTO>> getAddressTitlesOfOrders();*/
 
     DataResult<AddOrderResponse> addOrder(AddOrderRequest addOrderRequest);
+
+    Page<Order> findAllWithPagination(Pageable pageable);
 }

@@ -6,6 +6,9 @@ import com.etiya.ecommercedemopair5.business.dtos.response.order.AddOrderRespons
 import com.etiya.ecommercedemopair5.core.util.results.DataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.Order;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,5 +50,13 @@ public class OrderController{
     public DataResult<List<OrderDTO>> getAddressTitlesOfOrders(){
         return new SuccessDataResult<List<OrderDTO>>(orderService.getAddressTitlesOfOrders().getData());
     }*/
+
+    @GetMapping("getWithPagination")
+    // RequestParam => page, pageSize
+    public Page<Order> getWithPagination(@RequestParam("page")int page, @RequestParam("pageSize")int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        return orderService.findAllWithPagination(pageable);
+    }
 
 }

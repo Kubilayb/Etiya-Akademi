@@ -12,4 +12,6 @@ public interface CargoRepository extends JpaRepository<Cargo,Integer> {
     @Query("Select ca from Product as ca WHERE name=:name")
     Cargo findByName(String name);
 
+    boolean existsCargoByName(String name);
+
 }

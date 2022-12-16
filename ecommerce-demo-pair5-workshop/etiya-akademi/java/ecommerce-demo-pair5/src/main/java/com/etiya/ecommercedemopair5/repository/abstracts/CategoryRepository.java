@@ -20,6 +20,8 @@ public interface CategoryRepository extends JpaRepository<Category,Integer> {
     List<CategoryDTO> findByCategoryExample(int id);
 
 
+
+
     /*
     @Query("select new com.etiya.ecommercedemo4.business.dtos.response.address.GetAddressDto" +
             "(a.id,u.name,s.name,d.name,t.name,c.name,co.name)" +

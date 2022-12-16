@@ -5,7 +5,12 @@ import com.etiya.ecommercedemopair5.business.dtos.request.addresstitle.AddAddres
 import com.etiya.ecommercedemopair5.business.dtos.response.addresstitle.AddAddressTitleResponse;
 import com.etiya.ecommercedemopair5.core.util.results.DataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.AddressTitle;
+import com.etiya.ecommercedemopair5.repository.abstracts.AddressRepository;
+import com.etiya.ecommercedemopair5.repository.abstracts.AddressTitleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +23,10 @@ public class AddressTitleController {
     // DI
     @Autowired
     private AddressTitleService addressTitleService;
+    @Autowired
+    private AddressRepository addressRepository;
+    @Autowired
+    private AddressTitleRepository addressTitleRepository;
 
     public AddressTitleController(AddressTitleService addressTitleService) {
         this.addressTitleService = addressTitleService;
@@ -51,5 +60,13 @@ public class AddressTitleController {
     @PostMapping("/add")
     public ResponseEntity<DataResult<AddAddressTitleResponse>> addAddressTitle(@RequestBody AddAddressTittleRequest addAddressTitleRequest) {
         return new ResponseEntity<DataResult<AddAddressTitleResponse>>(addressTitleService.addAddressTitle(addAddressTitleRequest), HttpStatus.CREATED);
+    }
+
+    @GetMapping("getWithPagination")
+    // RequestParam => page, pageSize
+    public Page<AddressTitle> getWithPagination(@RequestParam("page")int page, @RequestParam("pageSize")int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        return addressTitleService.findAllWithPagination(pageable);
     }
 }

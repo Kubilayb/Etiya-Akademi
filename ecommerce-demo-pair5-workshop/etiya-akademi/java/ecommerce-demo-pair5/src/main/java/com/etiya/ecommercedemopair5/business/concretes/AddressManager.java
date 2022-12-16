@@ -15,6 +15,8 @@ import com.etiya.ecommercedemopair5.repository.abstracts.AddressTitleRepository;
 import com.etiya.ecommercedemopair5.repository.abstracts.CityRepository;
 import com.etiya.ecommercedemopair5.repository.abstracts.CustomerRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,7 +26,6 @@ import java.util.List;
 public class AddressManager implements AddressService {
 
     private AddressRepository addressRepository;
-
     private ModelMapperService modelMapperService;
 
    /* private AddressTitleService addressTitleService;
@@ -57,6 +58,11 @@ public class AddressManager implements AddressService {
         return new SuccessDataResult<List<AddressDTO>>(response);
     }
 
+    @Override
+    public Page<Address> findAllWithPagination(Pageable pageable) {
+        return addressRepository.findAll(pageable);
+    }
+
  /*   @Override
     public List<Address> customAddress(int id) {
         return addressRepository.customAddress(id);
@@ -69,7 +75,7 @@ public class AddressManager implements AddressService {
         checkIfExistsCityId(addAddressRequest.getCityId());
         checkIfExistsAddressTitleId(addAddressRequest.getAddressTitleId());
         checkIfExistsCustomerId(addAddressRequest.getCustomerId());
-        CheckIfExistsAddressId(addAddressRequest.getAddressTitleId());
+        checkIfExistsAddressId(addAddressRequest.getAddressTitleId());
 
 
         Address address =
@@ -99,13 +105,12 @@ public class AddressManager implements AddressService {
         }
     }
 
-    public void CheckIfExistsAddressId(int id){
+    public void checkIfExistsAddressId(int id){
         boolean isExists = addressRepository.existsById(id);
         if (!isExists){
             throw new BusinessException(Messages.Address.runTimeExceptionAddress);
         }
     }
-
 }
 /*        Address address = new Address();
 

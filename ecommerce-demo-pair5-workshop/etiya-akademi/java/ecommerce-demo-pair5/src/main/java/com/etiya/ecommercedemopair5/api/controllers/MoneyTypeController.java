@@ -6,6 +6,9 @@ import com.etiya.ecommercedemopair5.business.dtos.response.moneytype.AddMoneyTyp
 import com.etiya.ecommercedemopair5.core.util.results.DataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.MoneyType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,6 +45,13 @@ public class MoneyTypeController {
     public ResponseEntity<DataResult<AddMoneyTypeResponse>> addMoneyType(@RequestBody AddMoneyTypeRequest addMoneyTypeRequest){
         return new ResponseEntity<DataResult<AddMoneyTypeResponse>>
                 (moneyTypeService.addMoneyType(addMoneyTypeRequest), HttpStatus.CREATED);
+    }
+    @GetMapping("getWithPagination")
+    // RequestParam => page, pageSize
+    public Page<MoneyType> getWithPagination(@RequestParam("page")int page, @RequestParam("pageSize")int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        return moneyTypeService.findAllWithPagination(pageable);
     }
 
 }

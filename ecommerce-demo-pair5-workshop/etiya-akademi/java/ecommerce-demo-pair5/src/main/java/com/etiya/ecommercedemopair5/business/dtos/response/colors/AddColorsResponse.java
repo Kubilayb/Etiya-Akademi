@@ -1,4 +1,4 @@
-package com.etiya.ecommercedemopair5.business.dtos.response.calors;
+package com.etiya.ecommercedemopair5.business.dtos.response.colors;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

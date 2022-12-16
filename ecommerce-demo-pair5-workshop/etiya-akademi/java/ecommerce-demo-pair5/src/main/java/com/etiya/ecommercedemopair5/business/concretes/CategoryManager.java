@@ -10,10 +10,14 @@ import com.etiya.ecommercedemopair5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemopair5.core.util.results.DataResult;
 import com.etiya.ecommercedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.Category;
+import com.etiya.ecommercedemopair5.entities.concretes.Product;
+import com.etiya.ecommercedemopair5.repository.abstracts.AddressRepository;
 import com.etiya.ecommercedemopair5.repository.abstracts.CategoryRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +31,8 @@ public class CategoryManager implements CategoryService {
 
     private MessageSource messageSource;
     private ModelMapperService modelMapperService;
+    private final AddressRepository addressRepository;
+
     // SAYFALAMA
     // FİLTRELEME
     @Override
@@ -38,6 +44,11 @@ public class CategoryManager implements CategoryService {
     public DataResult<Category> getById(int id) {
         Category response = this.categoryRepository.findById(id).orElseThrow();
         return new SuccessDataResult<Category>(response,Messages.Category.getByCategoryId);
+    }
+
+    @Override
+    public Page<Category> findAllWithPagination(Pageable pageable) {
+        return categoryRepository.findAll(pageable);
     }
 
 

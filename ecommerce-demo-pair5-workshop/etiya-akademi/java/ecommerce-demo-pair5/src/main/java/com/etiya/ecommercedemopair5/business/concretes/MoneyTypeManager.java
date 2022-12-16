@@ -10,6 +10,8 @@ import com.etiya.ecommercedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.MoneyType;
 import com.etiya.ecommercedemopair5.repository.abstracts.MoneyTypeRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,6 +41,11 @@ public class MoneyTypeManager implements MoneyTypeService {
     public DataResult<MoneyType> getByName(String name) {
         MoneyType response=this.moneyTypeRepository.findByName(name);
         return new SuccessDataResult<MoneyType>(response,Messages.MoneyType.getByMoneyTypeName);
+    }
+
+    @Override
+    public Page<MoneyType> findAllWithPagination(Pageable pageable) {
+        return moneyTypeRepository.findAll(pageable);
     }
 
     @Override

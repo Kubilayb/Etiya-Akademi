@@ -1,17 +1,18 @@
 package com.etiya.ecommercedemopair5.business.concretes;
 
-
 import com.etiya.ecommercedemopair5.business.abstracts.ProductService;
 import com.etiya.ecommercedemopair5.business.constants.Messages;
 import com.etiya.ecommercedemopair5.business.dtos.ProductDTO;
 import com.etiya.ecommercedemopair5.business.dtos.request.product.AddProductRequest;
 import com.etiya.ecommercedemopair5.business.dtos.response.product.AddProductResponse;
+import com.etiya.ecommercedemopair5.core.util.exceptions.BusinessException;
 import com.etiya.ecommercedemopair5.core.util.mapping.ModelMapperService;
 import com.etiya.ecommercedemopair5.core.util.results.DataResult;
 import com.etiya.ecommercedemopair5.core.util.results.SuccessDataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.Product;
 import com.etiya.ecommercedemopair5.repository.abstracts.ProductRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -22,6 +23,7 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class ProductManager implements ProductService {
+
     private ProductRepository productRepository;
 
    // private ModelMapper modelMapper;
@@ -89,6 +91,7 @@ public class ProductManager implements ProductService {
                 modelMapperService.forResponse().map(productRepository.save(product),AddProductResponse.class);
         return new SuccessDataResult<AddProductResponse>(addProductResponse,Messages.Product.addProduct);
     }
+
 }
 
         /* Product product = new Product();

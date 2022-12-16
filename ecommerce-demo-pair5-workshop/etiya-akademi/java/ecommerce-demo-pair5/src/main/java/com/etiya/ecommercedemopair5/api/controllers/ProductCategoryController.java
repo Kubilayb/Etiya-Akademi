@@ -5,6 +5,9 @@ import com.etiya.ecommercedemopair5.business.dtos.request.productcategory.AddPro
 import com.etiya.ecommercedemopair5.business.dtos.response.productcategory.AddProductCategoryResponse;
 import com.etiya.ecommercedemopair5.core.util.results.DataResult;
 import com.etiya.ecommercedemopair5.entities.concretes.ProductCategory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +40,13 @@ public class ProductCategoryController {
     public ResponseEntity<DataResult<AddProductCategoryResponse>>addProductCategory
             (@RequestBody AddProductCategoryRequest addProductCategoryRequest){
         return new ResponseEntity<DataResult<AddProductCategoryResponse>>(productCategoryService.addProductCategory(addProductCategoryRequest), HttpStatus.CREATED);
+    }
+
+    @GetMapping("getWithPagination")
+    // RequestParam => page, pageSize
+    public Page<ProductCategory> getWithPagination(@RequestParam("page")int page, @RequestParam("pageSize")int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+
+        return productCategoryService.findAllWithPagination(pageable);
     }
 }
